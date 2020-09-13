@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>civicrm/volunteer-request</path>
+    <page_callback>CRM_Yhvrequestform_Form_VolunteerRequest</page_callback>
+    <title>VolunteerRequest</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
+  <item>
+    <path>civicrm/getdept</path>
+    <page_callback>CRM_Yhvrequestform_Page_YhvDepartment</page_callback>
+    <title>YhvDepartment</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
+</menu>

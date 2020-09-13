@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Yhvrequestform</base>
+  <class>VolunteerTimetable</class>
+  <name>civicrm_volunteer_timetable</name>
+  <comment>FIXME</comment>
+  <log>true</log>
+
+  <field>
+    <name>id</name>
+    <type>int unsigned</type>
+    <required>true</required>
+    <comment>Unique VolunteerTimetable ID</comment>
+  </field>
+  <primaryKey>
+    <name>id</name>
+    <autoincrement>true</autoincrement>
+  </primaryKey>
+
+  <field>
+    <name>activity_id</name>
+    <type>int unsigned</type>
+    <comment>FK to Activity</comment>
+  </field>
+  <foreignKey>
+    <name>activity_id</name>
+    <table>civicrm_activity</table>
+    <key>id</key>
+    <onDelete>CASCADE</onDelete>
+  </foreignKey>
+
+  <field>
+    <name>day</name>
+    <type>int unsigned</type>
+    <comment>Number that denotes day of the week</comment>
+  </field>
+
+  <field>
+    <name>time</name>
+    <type>int unsigned</type>
+    <comment>Number that denotes time period</comment>
+  </field>
+
+  <field>
+    <name>number_of_volunteers</name>
+    <type>int unsigned</type>
+    <comment>Number of volunteers needed</comment>
+  </field>
+
+</table>
