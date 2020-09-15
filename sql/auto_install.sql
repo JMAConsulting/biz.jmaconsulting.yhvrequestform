@@ -61,4 +61,68 @@ CREATE TABLE `civicrm_volunteer_timetable` (
 ,          CONSTRAINT FK_civicrm_volunteer_timetable_activity_id FOREIGN KEY (`activity_id`) REFERENCES `civicrm_activity`(`id`) ON DELETE CASCADE  
 )    ;
 
+--
+-- Table structure for table `civicrm_volunteer_lookup`
+--
+
+CREATE TABLE `civicrm_volunteer_lookup` (
+  `Funder` varchar(23) DEFAULT NULL,
+  `Location` varchar(40) DEFAULT NULL,
+  `Division` varchar(35) DEFAULT NULL,
+  `Program` varchar(60) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `civicrm_volunteer_lookup`
+--
+
+INSERT INTO `civicrm_volunteer_lookup` (`Funder`, `Location`, `Division`, `Program`) VALUES
+('Central East LHIN', 'McNicoll Centre 麥瀝高中心', 'Long Term Care', 'Any one of ServiceDept_D!B4-B11'),
+('Central East LHIN', 'Finch Centre 芬治中心', 'Long Term Care', 'Any one of ServiceDept_D!B4-B11'),
+('Central LHIN', 'Markham Centre 萬錦中心', 'Long Term Care', 'Any one of ServiceDept_D!B4-B11'),
+('Mississauga Halton LHIN', 'Mississauga Centre 密西沙加中心', 'Long Term Care', 'Any one of ServiceDept_D!B4-B11'),
+('Central East LHIN', 'McNicoll Centre 麥瀝高中心', 'Community and Professional Services', 'McNicoll Adult Day Program'),
+('Central East LHIN', 'McNicoll Centre 麥瀝高中心', 'Community and Professional Services', 'McNicoll Special Day Program'),
+('Central East LHIN', 'Finch Centre 芬治中心', 'Community and Professional Services', 'Finch Memory Training and Activity Centre (MTAC) Day Program'),
+('Central East LHIN', 'CHEC', 'Community and Professional Services', 'Community Health Education Centre (CHEC) Adult Day Program'),
+('Central LHIN', 'Markham Centre 萬錦中心', 'Community and Professional Services', 'Markham Adult Day Program'),
+('Mississauga Halton LHIN', 'Mississauga Centre 密西沙加中心', 'Community and Professional Services', 'Mississauga Adult Day Program'),
+('Central East LHIN', 'McNicoll Centre 麥瀝高中心', 'Community and Professional Services', 'Congregate Dining Program Scarborough'),
+('Mississauga Halton LHIN', 'Mississauga Centre 密西沙加中心', 'Community and Professional Services', 'Congregate Dining Program Mississauga'),
+('No LHIN', 'CERC', 'Community and Professional Services', 'Congregate Dining Program York Region'),
+('Central East LHIN', 'McNicoll Centre 麥瀝高中心', 'Community and Professional Services', 'Transportation'),
+('Central East LHIN', 'McNicoll Centre 麥瀝高中心', 'Community and Professional Services', 'Caregiver support'),
+('Central East LHIN', 'McNicoll Centre 麥瀝高中心', 'Community and Professional Services', 'Care Ambassador Scarborough'),
+('Central LHIN', 'CERC', 'Community and Professional Services', 'Care Ambassador York Region'),
+('Central LHIN', 'CERC', 'Community and Professional Services', 'Friendly visiting (community)'),
+('Central East LHIN', 'McNicoll Centre 麥瀝高中心', 'Community and Professional Services', 'Friendly visiting (community)'),
+('No LHIN', 'McNicoll Centre 麥瀝高中心', 'Community and Professional Services', 'Volunteer Development'),
+('No LHIN', 'Mississauga Centre 密西沙加中心', 'Community and Professional Services', 'Volunteer Development'),
+('No LHIN', 'Finch Centre 芬治中心', 'Community and Professional Services', 'Volunteer Development'),
+('No LHIN', 'Markham Centre 萬錦中心', 'Community and Professional Services', 'Volunteer Development'),
+('No LHIN', 'McNicoll Centre 麥瀝高中心', 'Community and Professional Services', 'Active Senior Program - Macrobian Club'),
+('No LHIN', 'CERC', 'Community and Professional Services', 'Active Senior Program - Richmond Hill '),
+('No LHIN', 'Mississauga Centre 密西沙加中心', 'Community and Professional Services', 'Active Senior Program - Mississauga '),
+('No LHIN', 'Finch Centre 芬治中心', 'Community and Professional Services', 'Active Senior Program - Finch'),
+('No LHIN', 'Garden Terrace', 'Community and Professional Services', 'Housing management - Garden Terrace'),
+('No LHIN', 'Chinese Evergreen Manor', 'Community and Professional Services', 'Housing management - Chinese Evergreen Manor'),
+('Central East LHIN', 'Chinese Evergreen Manor', 'Community and Professional Services', 'Home Support Services - Chinese Evergreen Manor '),
+('Central East LHIN', 'Garden Terrace', 'Community and Professional Services', 'Home Support Services - Garden Terrace'),
+('Central LHIN', 'Seneca Towers', 'Community and Professional Services', 'Home Support Services - Seneca Towers'),
+('Central East LHIN', 'Villa Elegance', 'Community and Professional Services', 'Home Support Services - Villa Elegance'),
+('Mississauga Halton LHIN', 'Coral Place', 'Community and Professional Services', 'Home Support Services - Coral Place'),
+('No LHIN', 'McNicoll Centre 麥瀝高中心', 'Corporate', 'HR'),
+('No LHIN', 'Finch Centre 芬治中心', 'Corporate', 'HR'),
+('No LHIN', 'Markham Centre 萬錦中心', 'Corporate', 'HR'),
+('No LHIN', 'Mississauga Centre 密西沙加中心', 'Corporate', 'HR'),
+('No LHIN', 'McNicoll Centre 麥瀝高中心', 'Corporate', 'Finance'),
+('No LHIN', 'McNicoll Centre 麥瀝高中心', 'Corporate', 'IT'),
+('No LHIN', 'Finch Centre 芬治中心', 'Corporate', 'IT'),
+('No LHIN', 'Markham Centre 萬錦中心', 'Corporate', 'IT'),
+('No LHIN', 'Mississauga Centre 密西沙加中心', 'Corporate', 'IT'),
+('No LHIN', 'McNicoll Centre 麥瀝高中心', 'Corporate', 'Administration'),
+('No LHIN', 'Finch Centre 芬治中心', 'Corporate', 'Administration'),
+('No LHIN', 'Markham Centre 萬錦中心', 'Corporate', 'Administration'),
+('No LHIN', 'Mississauga Centre 密西沙加中心', 'Corporate', 'Administration');
+
  
