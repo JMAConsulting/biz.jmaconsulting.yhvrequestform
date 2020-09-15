@@ -183,6 +183,9 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
     				// We add to the timetable.
 								CRM_Yhvrequestform_BAO_VolunteerTimetable::add($activity['id'], $values);
 						}
+
+		    CRM_Core_Session::setStatus("", ts("Volunteer Request submitted!"), "success");
+		    CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/volunteer-request', 'reset=1'));
 				}
 				catch (CiviCRM_API3_Exception $e) {
 						// Handle error here.
