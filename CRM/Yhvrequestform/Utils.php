@@ -48,8 +48,23 @@
 						$optionGroupName = CRM_Core_DAO::singleValueQuery("SELECT g.name
         FROM civicrm_custom_field c
         INNER JOIN civicrm_option_group g ON g.id = c.option_group_id
-        WHERE c.name = %1", [1 => [$name, 'String']]);
+        WHERE c.name = %1 AND c.custom_group_id = %2", [1 => [$name, 'String'], 2 => [VOLUNTEERING_CUSTOM, 'Integer']]);
+						if (empty($optionGroupName)) {
+								return [];
+						}
 						return CRM_Core_OptionGroup::values($optionGroupName);
+				}
+				
+				public static function getLocationFieldOptions($name) {
+						$values = CRM_Core_DAO::executeQuery("SELECT v.value, CONCAT(v.label, '\n', v.description) AS description
+        FROM civicrm_custom_field c
+        INNER JOIN civicrm_option_group g ON g.id = c.option_group_id
+        INNER JOIN civicrm_option_value v ON v.option_group_id = g.id
+        WHERE c.name = %1 and c.custom_group_id = %2", [1 => [$name, 'String'], 2 => [VOLUNTEERING_CUSTOM, 'Integer']])->fetchAll();
+      foreach($values as $value) {
+      		$returnValues[$value['value']] = $value['description'];
+      }
+      return $returnValues;
 				}
 				
 				public static function getChainedSelectValues($name, $selectedVal, $previousVal = NULL) {

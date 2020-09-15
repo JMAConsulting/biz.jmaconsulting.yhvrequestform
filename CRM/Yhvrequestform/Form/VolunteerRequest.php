@@ -14,7 +14,7 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
 						$$customField = CRM_Yhvrequestform_Utils::getCustomFieldDetails($customField);
   		}
   		
-				$this->add('select', 'location', ts($Location['label']), ['' => '- select -'] + CRM_Yhvrequestform_Utils::getCustomFieldOptions('Location'), TRUE);
+				$this->add('select', 'location', ts($Location['label']), ['' => '- select -'] + CRM_Yhvrequestform_Utils::getLocationFieldOptions('Location'), TRUE);
 				$this->assign('locationPreHelp', $Location['help_pre']);
 				$this->assign('locationPostHelp', $Location['help_post']);
 				
@@ -56,7 +56,7 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
 				$this->assign('jobPreHelp', $Job['help_pre']);
 				$this->assign('jobPostHelp', $Job['help_post']);
 		
-				$this->add('select', 'languages', ts($Languages['label']), CRM_Yhvrequestform_Utils::getCustomFieldOptions('Language'), FALSE, ['class' => 'crm-select2', 'multiple' => TRUE, 'placeholder' => ts('- select -')]);
+				$this->add('select', 'languages', ts($Languages['label']), CRM_Yhvrequestform_Utils::getCustomFieldOptions('Languages'), FALSE, ['class' => 'crm-select2', 'multiple' => TRUE, 'placeholder' => ts('- select -')]);
 				$this->assign('languagesPreHelp', $Languages['help_pre']);
 				$this->assign('languagesPostHelp', $Languages['help_post']);
 				
