@@ -1,6 +1,7 @@
 <?php
 
 require_once 'yhvrequestform.civix.php';
+require_once 'yhvrequestform.constants.php';
 use CRM_Yhvrequestform_ExtensionUtil as E;
 
 /**

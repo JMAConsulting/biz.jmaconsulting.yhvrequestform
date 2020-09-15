@@ -12,4 +12,10 @@
     <title>YhvDepartment</title>
     <access_arguments>access CiviCRM</access_arguments>
   </item>
+  <item>
+    <path>civicrm/getpro</path>
+    <page_callback>CRM_Yhvrequestform_Page_YhvProgram</page_callback>
+    <title>YhvProgram</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
 </menu>

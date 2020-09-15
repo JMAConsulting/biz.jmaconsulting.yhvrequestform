@@ -41,7 +41,7 @@ SET FOREIGN_KEY_CHECKS=1;
 
 -- /*******************************************************
 -- *
--- * civicrm_preference_group
+-- * civicrm_volunteer_timetable
 -- *
 -- * FIXME
 -- *
@@ -53,12 +53,12 @@ CREATE TABLE `civicrm_volunteer_timetable` (
      `activity_id` int unsigned    COMMENT 'FK to Activity',
      `day` int unsigned    COMMENT 'Number that denotes day of the week',
      `time` int unsigned    COMMENT 'Number that denotes time period',
-     `number_of_volunteers` int unsigned    COMMENT 'Number of volunteers needed'
+     `number_of_volunteers` int unsigned    COMMENT 'Number of volunteers needed' 
 ,
         PRIMARY KEY (`id`)
  
  
-,          CONSTRAINT FK_civicrm_volunteer_timetable_activity_id FOREIGN KEY (`activity_id`) REFERENCES `civicrm_activity`(`id`) ON DELETE CASCADE
+,          CONSTRAINT FK_civicrm_volunteer_timetable_activity_id FOREIGN KEY (`activity_id`) REFERENCES `civicrm_activity`(`id`) ON DELETE CASCADE  
 )    ;
 
  

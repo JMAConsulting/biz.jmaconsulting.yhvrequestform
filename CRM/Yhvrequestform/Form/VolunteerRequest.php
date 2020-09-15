@@ -10,13 +10,18 @@ use CRM_Yhvrequestform_ExtensionUtil as E;
 class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
   public function buildQuickForm() {
   		CRM_Utils_System::setTitle('Volunteer Request Form');
-		
-				$options = CRM_Yhvrequestform_Utils::getCustomFieldOptions('Location');
-				$this->add('select', 'location', ts('Location'), ['' => '- select -'] + $options, TRUE);
+  		foreach (CRM_Yhvrequestform_Utils::getCustomFields() as $customField) {
+						$$customField = CRM_Yhvrequestform_Utils::getCustomFieldDetails($customField);
+  		}
+  		
+				$this->add('select', 'location', ts($Location['label']), ['' => '- select -'] + CRM_Yhvrequestform_Utils::getCustomFieldOptions('Location'), TRUE);
+				$this->assign('locationPreHelp', $Location['help_pre']);
+				$this->assign('locationPostHelp', $Location['help_post']);
+				
 				$settings = [
 						'control_field' => 'location',
 						'data-callback' => 'civicrm/getdept',
-						'label' => ts('Division'),
+						'label' => ts($Division['label']),
 						'data-empty-prompt' => ts('Choose Location first'),
 						'data-none-prompt' => ts('- N/A -'),
 						'multiple' => FALSE,
@@ -24,12 +29,14 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
 						'placeholder' => ts('- select -'),
 				];
 		
-		//		$this->addChainSelect('division', $settings);
-		
+				$this->addChainSelect('division', $settings);
+				$this->assign('divisionPreHelp', $Division['help_pre']);
+				$this->assign('divisionPostHelp', $Division['help_post']);
+				
 				$settings = [
 						'control_field' => 'division',
-						'data-callback' => 'civicrm/getdept',
-						'label' => ts('Program'),
+						'data-callback' => 'civicrm/getpro',
+						'label' => ts($Program['label']),
 						'data-empty-prompt' => ts('Choose Division first'),
 						'data-none-prompt' => ts('- N/A -'),
 						'multiple' => FALSE,
@@ -37,43 +44,67 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
 						'placeholder' => ts('- select -'),
 				];
 		
-			//	$this->addChainSelect('program', $settings);
+				$this->addChainSelect('program', $settings);
+		
+				$this->assign('programPreHelp', $Program['help_pre']);
+				$this->assign('programPostHelp', $Program['help_post']);
 				
-				$this->add('datepicker', 'request_date', ts('Date of Request'), [], TRUE, ['time' => FALSE]);
+				$this->add('datepicker', 'request_date', ts('Date Of Request'), [], TRUE, ['time' => FALSE]);
   		$this->freeze('request_date');
 		
-				$jobOptions = CRM_Yhvrequestform_Utils::getCustomFieldOptions('Job');
-  		$this->add('select', 'job', ts('Job Description / Duties'), $jobOptions);
+  		$this->add('select', 'job', ts($Job['label']), ['' => '- select -'] + CRM_Yhvrequestform_Utils::getCustomFieldOptions('Job'), TRUE);
+				$this->assign('jobPreHelp', $Job['help_pre']);
+				$this->assign('jobPostHelp', $Job['help_post']);
 		
-				$this->add('select', 'languages', ts('Language'), CRM_Yhvrequestform_Utils::getCustomFieldOptions('Language'), FALSE, ['class' => 'crm-select2', 'multiple' => TRUE, 'placeholder' => ts('- select -')]);
+				$this->add('select', 'languages', ts($Languages['label']), CRM_Yhvrequestform_Utils::getCustomFieldOptions('Language'), FALSE, ['class' => 'crm-select2', 'multiple' => TRUE, 'placeholder' => ts('- select -')]);
+				$this->assign('languagesPreHelp', $Languages['help_pre']);
+				$this->assign('languagesPostHelp', $Languages['help_post']);
 				
-				$this->addYesNo('computer_skills', ts('Computer Skills'), ['allowClear' => TRUE]);
+				$this->addYesNo('computer_skills', ts($Computer_Skills['label']), ['allowClear' => TRUE]);
+				$this->assign('computerPreHelp', $Computer_Skills['help_pre']);
+				$this->assign('computerPostHelp', $Computer_Skills['help_post']);
 		
-				$this->addYesNo('tb_screening', ts('TB Screening'), ['allowClear' => TRUE]);
+				$this->addYesNo('tb_screening', ts($TB_Screening['label']), ['allowClear' => TRUE]);
+				$this->assign('tbPreHelp', $TB_Screening['help_pre']);
+				$this->assign('tbPostHelp', $TB_Screening['help_post']);
 		
-				$this->addYesNo('police_check', ts('Police Check'), ['allowClear' => TRUE]);
+				$this->addYesNo('police_check', ts($Police_Check['label']), ['allowClear' => TRUE]);
+				$this->assign('policePreHelp', $Police_Check['help_pre']);
+				$this->assign('policePostHelp', $Police_Check['help_post']);
 				
-				$this->addYesNo('vehicle', ts('Vehicle'), ['allowClear' => TRUE]);
+				$this->addYesNo('vehicle', ts($Vehicle['label']), ['allowClear' => TRUE]);
+				$this->assign('vehiclePreHelp', $Vehicle['help_pre']);
+				$this->assign('vehiclePostHelp', $Vehicle['help_post']);
 				
-				$this->add('text', 'other_skills', ts('Others'));
+				$this->add('text', 'other_skills', ts($Other_Skills['label']));
+				$this->assign('otherPreHelp', $Other_Skills['help_pre']);
+				$this->assign('otherPostHelp', $Other_Skills['help_post']);
 				
-				$this->addRadio('type_of_request', ts('Type'), ['one_time' => ts('One Time'), 'recurring' => ts('Recurring')]);
+				$this->addRadio('type_of_request', ts($Type_Of_Request['label']), ['one_time' => ts('One Time'), 'recurring' => ts('Recurring')]);
+				$this->assign('requestPreHelp', $Type_Of_Request['help_pre']);
+				$this->assign('requestPostHelp', $Type_Of_Request['help_post']);
 				
-				$this->add('text', 'duration', ts('Duration'));
+				$this->add('text', 'duration', ts($Duration['label']));
+				$this->assign('durationPreHelp', $Duration['help_pre']);
+				$this->assign('durationPostHelp', $Duration['help_post']);
 				
-				$this->add('datepicker', 'start_date', ts('Start Date'), [], FALSE, ['time' => FALSE]);
-		
-				$this->add('datepicker', 'end_date', ts('End Date (if any)'), [], FALSE, ['time' => FALSE]);
+				$this->add('datepicker', 'start_date', ts($Start_Date['label']), [], FALSE, ['time' => FALSE]);
+				$this->assign('startPreHelp', $Start_Date['help_pre']);
+				$this->assign('startPostHelp', $Start_Date['help_post']);
+				
+				$this->add('datepicker', 'end_date', ts($End_Date['label']), [], FALSE, ['time' => FALSE]);
+				$this->assign('endPreHelp', $End_Date['help_pre']);
+				$this->assign('endPostHelp', $End_Date['help_post']);
 				
 				// Time table.
 				CRM_Yhvrequestform_Utils::renderGridElements($this);
   		
-				$this->add('textarea', 'other_remarks', ts('Other Remarks'), 'rows=5, cols=50');
+				$this->add('textarea', 'other_remarks', ts($Other_Remarks['label']), 'rows=5, cols=50');
+				$this->assign('remarkPreHelp', $Other_Remarks['help_pre']);
+				$this->assign('remarkPostHelp', $Other_Remarks['help_post']);
 				
 				$this->assign('liasonStaff', CRM_Core_Session::singleton()->getLoggedInContactDisplayName());
 
-    // export form elements
-    $this->assign('elementNames', $this->getRenderableElementNames());
 				$this->addButtons([
 						[
 								'type' => 'upload',
@@ -88,33 +119,6 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
 				]);
     parent::buildQuickForm();
   }
-		
-		/**
-			* Validate division / location / program match and suppress unwanted "required" errors
-			*/
-		private function validateChainSelectFields() {
-				return [];
-				foreach ($this->_chainSelectFields as $control => $target) {
-						if ($this->elementExists($control) && $this->elementExists($target)) {
-								$controlValue = (array) $this->getElementValue($control);
-								$targetField = $this->getElement($target);
-								$controlType = $targetField->getAttribute('data-callback') == 'civicrm/ajax/jqCounty' ? 'stateProvince' : 'country';
-								$targetValue = array_filter((array) $targetField->getValue());
-								if ($targetValue || $this->getElementError($target)) {
-										$options = CRM_Core_BAO_Location::getChainSelectValues($controlValue, $controlType, TRUE);
-										if ($targetValue) {
-												if (!array_intersect($targetValue, array_keys($options))) {
-														$this->setElementError($target, $controlType == 'country' ? ts('State/Province does not match the selected Country') : ts('County does not match the selected State/Province'));
-												}
-										}
-										// Suppress "required" error for field if it has no options
-										elseif (!$options) {
-												$this->setElementError($target, NULL);
-										}
-								}
-						}
-				}
-		}
   
   public function setDefaultValues() {
   		$defaults = [
@@ -122,27 +126,39 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
 				];
 				return $defaults;
   }
-
+		
+		/**
+			* Performs the server side validation.
+			* @since     1.0
+			* @return bool
+			*   true if no error found
+			* @throws    HTML_QuickForm_Error
+			*/
+		public function validate() {
+				$hookErrors = [];
+				
+				CRM_Utils_Hook::validateForm(
+						get_class($this),
+						$this->_submitValues,
+						$this->_submitFiles,
+						$this,
+						$hookErrors
+				);
+				
+				if (!empty($hookErrors)) {
+						$this->_errors += $hookErrors;
+				}
+				
+				return (0 == count($this->_errors));
+		}
+		
   public function postProcess() {
     $values = $this->exportValues();
     // Key Value pair of field name from form and custom field name.
-    $customFields = [
-    		'location' => 'Location',
-						'division' => 'Division',
-						'program' => 'Program',
-						'funder' => 'Funder',
-						'job' => 'Job',
-						'languages' => 'Language',
-						'computer_skills' => 'Computer Skills',
-						'tb_screening' => 'TB Screening',
-						'police_check' => 'Police Check',
-						'vehicle' => 'Vehicle',
-						'other_skills' => 'Other Skills',
-						'type_of_request' => 'Type Of Request',
-						'duration' => 'Duration',
-						'start_date' => 'Start Date',
-						'end_date' => 'End Date',
-				];
+		
+				// We also determine the Funder from the hierarchical select fields.
+				$values['funder'] = CRM_Yhvrequestform_Utils::getFunder($values);
+				$customFields = CRM_Yhvrequestform_Utils::getCustomFields();
     $customParams = [];
     foreach ($customFields as $field => $name) {
     		if (!empty($values[$field])) {
@@ -181,27 +197,6 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
 						CRM_Core_Error::debug_var('Error in processing volunteer request:', $error);
 				}
     parent::postProcess();
-  }
-
-  /**
-   * Get the fields/elements defined in this form.
-   *
-   * @return array (string)
-   */
-  public function getRenderableElementNames() {
-    // The _elements list includes some items which should not be
-    // auto-rendered in the loop -- such as "qfKey" and "buttons".  These
-    // items don't have labels.  We'll identify renderable by filtering on
-    // the 'label'.
-    $elementNames = array();
-    foreach ($this->_elements as $element) {
-      /** @var HTML_QuickForm_Element $element */
-      $label = $element->getLabel();
-      if (!empty($label)) {
-        $elementNames[] = $element->getName();
-      }
-    }
-    return $elementNames;
   }
 
 }
