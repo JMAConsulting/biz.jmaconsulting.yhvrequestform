@@ -3,6 +3,7 @@
 require_once 'yhvrequestform.civix.php';
 require_once 'yhvrequestform.constants.php';
 use CRM_Yhvrequestform_ExtensionUtil as E;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Implements hook_civicrm_config().
@@ -87,6 +88,11 @@ function yhvrequestform_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
 function yhvrequestform_civicrm_managed(&$entities) {
   _yhvrequestform_civix_civicrm_managed($entities);
 }
+
+function yhvrequestform_civicrm_container(ContainerBuilder $container) {
+		$container->addCompilerPass(new Civi\Volunteertimetable\CompilerPass());
+}
+
 
 /**
  * Implements hook_civicrm_caseTypes().

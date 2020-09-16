@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <extension key="biz.jmaconsulting.yhvrequestform" type="module">
   <file>yhvrequestform</file>
-  <name>FIXME</name>
-  <description>FIXME</description>
+  <name>Yee Hong Volunteer Request Form</name>
+  <description>This extension provides the Yee Hong volunteers request form. It also adds the necessary action providers for the form processor for the volunteer application form.</description>
   <license>AGPL-3.0</license>
   <maintainer>
     <author>Edsel Lopez</author>
@@ -20,7 +20,13 @@
   <compatibility>
     <ver>5.0</ver>
   </compatibility>
+  <requires>
+      <ext>action_provider</ext>
+  </requires>
   <comments>This is a new, undeveloped module</comments>
+  <classloader>
+      <psr4 prefix="Civi\" path="Civi" />
+  </classloader>
   <civix>
     <namespace>CRM/Yhvrequestform</namespace>
   </civix>
