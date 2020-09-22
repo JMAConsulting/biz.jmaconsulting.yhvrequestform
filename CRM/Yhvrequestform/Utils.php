@@ -81,10 +81,26 @@
 						if ($name == "Program") {
 								// Filter according to the location and division.
 								$lookup = CRM_Core_DAO::executeQuery("SELECT Program FROM civicrm_volunteer_lookup WHERE Location = %1 AND Division = %2 GROUP BY Program", [1 => [$previousVal, 'String'], 2 => [$selectedVal, 'String']])->fetchAll();
+								$isAny = FALSE;
 								if (!empty($lookup)) {
 										foreach ($lookup as $option) {
+												if ($option['Program'] == 'Any') {
+														$isAny = TRUE;
+														break;
+												}
 												$validOptions[$option['Program']] = $option['Program'];
 										}
+								}
+								if ($isAny) {
+										$validOptions = [
+												'Administration' => 'Administration',
+												'Activation' => 'Activation',
+												'Chaplain' => 'Chaplain',
+												'Environmental Services' => 'Environmental Services',
+												'Food Service' => 'Food Service',
+												'Nursing' => 'Nursing',
+												'Service Quality' => 'Service Quality',
+										];
 								}
 						}
 						$options = self::getCustomFieldOptions($name);
