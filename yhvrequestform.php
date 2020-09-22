@@ -161,7 +161,7 @@ function yhvrequestform_civicrm_buildForm($formName, &$form) {
 				if (in_array($form->_action, [CRM_Core_Action::VIEW, CRM_Core_Action::UPDATE])) {
 						// Render the timetable if this is a volunteer request activity.
 						$activityTypes = CRM_Activity_BAO_Activity::buildOptions('activity_type_id');
-						if ($activityTypes[$form->_activityTypeId] == "Volunteer Request") {
+						if (in_array($activityTypes[$form->_activityTypeId], ['Volunteer Request', 'Volunteer'])) {
 								// Render the grid.
 								CRM_Yhvrequestform_Utils::renderGridElements($form);
 								CRM_Core_Region::instance('page-body')->add(array(
