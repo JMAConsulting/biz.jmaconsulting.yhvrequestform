@@ -103,7 +103,7 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
 				$this->assign('remarkPreHelp', $Other_Remarks['help_pre']);
 				$this->assign('remarkPostHelp', $Other_Remarks['help_post']);
 				
-				$this->assign('liasonStaff', CRM_Core_Session::singleton()->getLoggedInContactDisplayName());
+				$this->assign('liaisonStaff', CRM_Core_Session::singleton()->getLoggedInContactDisplayName());
 
 				$this->addButtons([
 						[

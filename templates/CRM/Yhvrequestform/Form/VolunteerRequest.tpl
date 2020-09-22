@@ -49,8 +49,8 @@
     <tr>
         <td>
             <div class="crm-section">
-                <div class="label">Liason Staff</div>
-                <div class="content">{$liasonStaff}</div>
+                <div class="label">Liaison Staff</div>
+                <div class="content">{$liaisonStaff}</div>
                 <div class="clear"></div>
             </div>
             <div class="crm-section">
