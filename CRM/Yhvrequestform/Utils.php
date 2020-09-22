@@ -135,12 +135,17 @@
 						
 				}
 				
-				public static function renderGridElements($form) {
+				public static function renderGridElements($form, $yesNo = FALSE) {
 						$timePeriods = CRM_Core_OptionGroup::values('yhv_time_period');
 						$days = CRM_Core_OptionGroup::values('yhv_days');
 						for ($i = 1; $i <= count($timePeriods); $i++) {
 								for ($j = 1; $j <= count($days); $j++) {
-										$form->add('text', $j . '_' . $i, ts($j . '_' . $i), ['size' => 5]);
+										if ($yesNo) {
+												$form->addYesNo($j . '_' . $i, ts($j . '_' . $i));
+										}
+										else {
+												$form->add('text', $j . '_' . $i, ts($j . '_' . $i), ['size' => 5]);
+										}
 										$gridElements[$timePeriods[$i]][$j] = $j . '_' . $i;
 								}
 						}

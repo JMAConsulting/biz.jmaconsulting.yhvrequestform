@@ -163,7 +163,12 @@ function yhvrequestform_civicrm_buildForm($formName, &$form) {
 						$activityTypes = CRM_Activity_BAO_Activity::buildOptions('activity_type_id');
 						if (in_array($activityTypes[$form->_activityTypeId], ['Volunteer Request', 'Volunteer'])) {
 								// Render the grid.
-								CRM_Yhvrequestform_Utils::renderGridElements($form);
+								if ($activityTypes[$form->_activityTypeId] == 'Volunteer Request') {
+										CRM_Yhvrequestform_Utils::renderGridElements($form);
+								}
+								else {
+										CRM_Yhvrequestform_Utils::renderGridElements($form, TRUE);
+								}
 								CRM_Core_Region::instance('page-body')->add(array(
 										'template' => 'CRM/Yhvrequestform/Form/VolunteerTimetableView.tpl',
 								));
