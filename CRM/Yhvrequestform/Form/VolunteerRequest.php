@@ -108,7 +108,7 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
 				$this->addButtons([
 						[
 								'type' => 'upload',
-								'name' => ts('Submit'),
+								'name' => ts('Submit Volunteer Request'),
 								'spacing' => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
 								'isDefault' => TRUE,
 						],
