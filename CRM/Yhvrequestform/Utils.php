@@ -141,7 +141,7 @@
 						for ($i = 1; $i <= count($timePeriods); $i++) {
 								for ($j = 1; $j <= count($days); $j++) {
 										if ($yesNo) {
-												$form->addYesNo($j . '_' . $i, ts($j . '_' . $i));
+												$form->add('checkbox', $j . '_' . $i, ts('Yes'));
 										}
 										else {
 												$form->add('text', $j . '_' . $i, ts($j . '_' . $i), ['size' => 5]);
