@@ -230,7 +230,7 @@ if (function_exists('add_filter')) {
  */
 function yhvrequestform_amend_args($args, $shortcode_atts) {
   if ($shortcode_atts['component'] === 'volunteer_request') {
-    $args['q'] = 'civicrm/volunteer_request';
+    $args['q'] = 'civicrm/volunteer-request';
     $args['action'] = '';
   }
   return $args;
