@@ -4,18 +4,23 @@
     <path>civicrm/volunteer-request</path>
     <page_callback>CRM_Yhvrequestform_Form_VolunteerRequest</page_callback>
     <title>VolunteerRequest</title>
-    <access_arguments>access CiviCRM</access_arguments>
+    <access_arguments>*always allow*</access_arguments>
+    <is_public>true</is_public>
   </item>
   <item>
     <path>civicrm/getdept</path>
     <page_callback>CRM_Yhvrequestform_Page_YhvDepartment</page_callback>
     <title>YhvDepartment</title>
-    <access_arguments>access CiviCRM</access_arguments>
+    <access_arguments>*always allow*</access_arguments>
+    <is_public>true</is_public>
+    <is_frontend>true</is_frontend>
   </item>
   <item>
     <path>civicrm/getpro</path>
     <page_callback>CRM_Yhvrequestform_Page_YhvProgram</page_callback>
     <title>YhvProgram</title>
-    <access_arguments>access CiviCRM</access_arguments>
+    <access_arguments>*always allow*</access_arguments>
+    <is_public>true</is_public>
+    <is_frontend>true</is_frontend>
   </item>
 </menu>

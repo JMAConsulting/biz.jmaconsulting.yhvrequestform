@@ -200,6 +200,42 @@ function yhvrequestform_civicrm_postProcess($formName, $form) {
   }
 }
 
+function yhvrequestform_civicrm_preProcess($formName, &$form) {
+  if ($formName == "CRM_Core_Form_ShortCode") {
+    $form->components['volunteer_request'] = array(
+      'label' => ts("Volunteer Request"),
+      'select' => array(
+        'key' => 'id',
+        'entity' => 'Profile',
+        'select' => array('minimumInputLength' => 0),
+      ),
+    );
+  }
+}
+
+if (function_exists('add_filter')) {
+  add_filter('civicrm_shortcode_preprocess_atts', 'yhvrequestform_amend_args', 10, 2);
+}
+
+/**
+ * Filter the CiviCRM shortcode arguments.
+ *
+ * Modify the attributes that the 'civicrm' shortcode allows. The attributes
+ * that are injected (and their values) will become available in the $_REQUEST
+ * and $_GET arrays.
+ *
+ * @param array $args Existing shortcode arguments
+ * @param array $shortcode_atts Shortcode attributes
+ * @return array $args Modified shortcode arguments
+ */
+function yhvrequestform_amend_args($args, $shortcode_atts) {
+  if ($shortcode_atts['component'] === 'volunteer_request') {
+    $args['q'] = 'civicrm/volunteer_request';
+    $args['action'] = '';
+  }
+  return $args;
+}
+
 // --- Functions below this ship commented out. Uncomment as required. ---
 
 /**

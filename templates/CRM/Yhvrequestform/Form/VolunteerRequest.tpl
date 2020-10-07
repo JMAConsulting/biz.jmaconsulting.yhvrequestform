@@ -49,8 +49,8 @@
     <tr>
         <td>
             <div class="crm-section">
-                <div class="label">Liaison Staff</div>
-                <div class="content">{$liaisonStaff}</div>
+                <div class="label">{$form.liaison_staff.label}</div>
+                <div class="content">{$form.liaison_staff.html}</div>
                 <div class="clear"></div>
             </div>
             <div class="crm-section">
@@ -64,76 +64,95 @@
                 {/if}
                 <div class="clear"></div>
             </div>
+            <div class="crm-section">
+                {if $jobdescPreHelp}
+                    <div class="content"><i>{$jobdescPreHelp}</i></div>
+                {/if}
+                <div class="label">{$form.job_description.label}</div>
+                <div class="content">{$form.job_description.html}</div>
+                {if $jobdescPostHelp}
+                    <div class="content"><i>{$jobdescPostHelp}</i></div>
+                {/if}
+                <div class="clear"></div>
+            </div>
         </td>
         <td>
         </td>
     </tr>
+</table>
+<legend>{ts}Knowledge / Skills / Qualifications Required{/ts}</legend>
+<table class="compressed">
     <tr>
         <td>
             <div class="crm-section">
-                <div class="label">{ts}Knowledge / Skills / Qualifications Required{/ts}</div>
-                <div class="content">
-                    {if $languagesPreHelp}
-                        <div class="content"><i>{$languagesPreHelp}</i></div>
-                    {/if}
-                    <div class="label">{$form.languages.label}</div>
-                    <div class="content">{$form.languages.html}</div>
-                    {if $languagesPostHelp}
-                        <div class="content"><i>{$languagesPostHelp}</i></div>
-                    {/if}
-                    <div class="clear"></div>
+                {if $languagesPreHelp}
+                    <div class="content"><i>{$languagesPreHelp}</i></div>
+                {/if}
+                <div class="label">{$form.languages.label}</div>
+                <div class="content">{$form.languages.html}</div>
+                {if $languagesPostHelp}
+                    <div class="content"><i>{$languagesPostHelp}</i></div>
+                {/if}
+                <div class="clear"></div>
+            </div>
 
+            <div class="crm-section">
+                {if $computerPreHelp}
+                    <div class="content"><i>{$computerPreHelp}</i></div>
+                {/if}
+                <div class="label">{$form.computer_skills.label}</div>
+                <div class="content">{$form.computer_skills.html}</div>
+                {if $computerPostHelp}
+                    <div class="content"><i>{$computerPostHelp}</i></div>
+                {/if}
+                <div class="clear"></div>
+            </div>
 
-                    {if $computerPreHelp}
-                        <div class="content"><i>{$computerPreHelp}</i></div>
-                    {/if}
-                    <div class="label">{$form.computer_skills.label}</div>
-                    <div class="content">{$form.computer_skills.html}</div>
-                    {if $computerPostHelp}
-                        <div class="content"><i>{$computerPostHelp}</i></div>
-                    {/if}
-                    <div class="clear"></div>
+            <div class="crm-section">
+                {if $tbPreHelp}
+                    <div class="content"><i>{$tbPreHelp}</i></div>
+                {/if}
+                <div class="label">{$form.tb_screening.label}</div>
+                <div class="content">{$form.tb_screening.html}</div>
+                {if $tbPostHelp}
+                    <div class="content"><i>{$tbPostHelp}</i></div>
+                {/if}
+                <div class="clear"></div>
+            </div>
 
-                    {if $tbPreHelp}
-                        <div class="content"><i>{$tbPreHelp}</i></div>
-                    {/if}
-                    <div class="label">{$form.tb_screening.label}</div>
-                    <div class="content">{$form.tb_screening.html}</div>
-                    {if $tbPostHelp}
-                        <div class="content"><i>{$tbPostHelp}</i></div>
-                    {/if}
-                    <div class="clear"></div>
+            <div class="crm-section">
+                {if $policePreHelp}
+                    <div class="content"><i>{$policePreHelp}</i></div>
+                {/if}
+                <div class="label">{$form.police_check.label}</div>
+                <div class="content">{$form.police_check.html}</div>
+                {if $policePostHelp}
+                    <div class="content"><i>{$policePostHelp}</i></div>
+                {/if}
+                <div class="clear"></div>
+            </div>
 
-                    {if $policePreHelp}
-                        <div class="content"><i>{$policePreHelp}</i></div>
-                    {/if}
-                    <div class="label">{$form.police_check.label}</div>
-                    <div class="content">{$form.police_check.html}</div>
-                    {if $policePostHelp}
-                        <div class="content"><i>{$policePostHelp}</i></div>
-                    {/if}
-                    <div class="clear"></div>
+            <div class="crm-section">
+                {if $vehiclePreHelp}
+                    <div class="content"><i>{$vehiclePreHelp}</i></div>
+                {/if}
+                <div class="label">{$form.vehicle.label}</div>
+                <div class="content">{$form.vehicle.html}</div>
+                {if $vehiclePostHelp}
+                    <div class="content"><i>{$vehiclePostHelp}</i></div>
+                {/if}
+                <div class="clear"></div>
+            </div>
 
-                    {if $vehiclePreHelp}
-                        <div class="content"><i>{$vehiclePreHelp}</i></div>
-                    {/if}
-                    <div class="label">{$form.vehicle.label}</div>
-                    <div class="content">{$form.vehicle.html}</div>
-                    {if $vehiclePostHelp}
-                        <div class="content"><i>{$vehiclePostHelp}</i></div>
-                    {/if}
-                    <div class="clear"></div>
-
-                    {if $otherPreHelp}
-                        <div class="content"><i>{$otherPreHelp}</i></div>
-                    {/if}
-                    <div class="label">{$form.other_skills.label}</div>
-                    <div class="content">{$form.other_skills.html}</div>
-                    {if $otherPostHelp}
-                        <div class="content"><i>{$otherPostHelp}</i></div>
-                    {/if}
-                    <div class="clear"></div>
-                </div>
+            <div class="crm-section">
+                {if $otherPreHelp}
+                    <div class="content"><i>{$otherPreHelp}</i></div>
+                {/if}
+                <div class="label">{$form.other_skills.label}</div>
+                <div class="content">{$form.other_skills.html}</div>
+                {if $otherPostHelp}
+                    <div class="content"><i>{$otherPostHelp}</i></div>
+                {/if}
                 <div class="clear"></div>
             </div>
         </td>
@@ -188,7 +207,7 @@
     {/if}
     <div class="clear"></div>
 </div>
-<legend>{ts}Day and # of Volunteer(s) Needed{/ts}</legend>
+<legend>{ts}Please enter the number of volunteer(s) needed for the time slot{/ts}</legend>
 
 {include file="CRM/Yhvrequestform/Form/VolunteerTimetable.tpl"}
 <div class="crm-section">

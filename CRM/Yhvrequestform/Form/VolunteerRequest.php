@@ -52,9 +52,15 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
     $this->add('datepicker', 'request_date', ts('Date Of Request'), [], TRUE, ['time' => FALSE]);
     $this->freeze('request_date');
 
+    $this->add('text', 'liaison_staff', ts('Liaison Staff'), [],TRUE);
+
     $this->add('select', 'job', ts($Job['label']), ['' => '- select -'] + CRM_Yhvrequestform_Utils::getCustomFieldOptions('Job'), TRUE);
     $this->assign('jobPreHelp', $Job['help_pre']);
     $this->assign('jobPostHelp', $Job['help_post']);
+
+    $this->add('textarea', 'job_description', ts($Job_Description_Duties['label']), 'rows=5, cols=50');
+    $this->assign('jobdescPreHelp', $Job_Description_Duties['help_pre']);
+    $this->assign('jobdescPostHelp', $Job_Description_Duties['help_post']);
 
     $this->add('select', 'languages', ts($Languages['label']), CRM_Yhvrequestform_Utils::getCustomFieldOptions('Languages'), FALSE, ['class' => 'crm-select2', 'multiple' => TRUE, 'placeholder' => ts('- select -')]);
     $this->assign('languagesPreHelp', $Languages['help_pre']);
@@ -103,7 +109,7 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
     $this->assign('remarkPreHelp', $Other_Remarks['help_pre']);
     $this->assign('remarkPostHelp', $Other_Remarks['help_post']);
 
-    $this->assign('liaisonStaff', CRM_Core_Session::singleton()->getLoggedInContactDisplayName());
+    //$this->assign('liaisonStaff', CRM_Core_Session::singleton()->getLoggedInContactDisplayName());
 
     $this->addButtons([
         [
@@ -166,10 +172,11 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
         $customParams[$customName] = $values[$field];
       }
     }
+    $sourceCid = CRM_Yhvrequestform_Utils::createLiaisonContact($values['liaison_staff']);
     // Create Activity.
     $activityParams = [
         'activity_type_id' => "Volunteer Request",
-        'source_contact_id' => "user_contact_id",
+        'source_contact_id' => $sourceCid,
         'assignee_id' => VOLUNTEER_REQUEST_FACILITATOR,
         'status_id' => "Scheduled",
     ];
@@ -184,8 +191,8 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
         CRM_Yhvrequestform_BAO_VolunteerTimetable::add($activity['id'], $values);
       }
 
-      CRM_Core_Session::setStatus("", ts("Volunteer Request submitted!"), "success");
-      CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/volunteer-request', 'reset=1'));
+      CRM_Core_Session::setStatus(ts("Thank You!"), ts("Your volunteer request has been successfully submitted"), "success");
+      CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/dashboard', 'reset=1'));
     }
     catch (CiviCRM_API3_Exception $e) {
       // Handle error here.

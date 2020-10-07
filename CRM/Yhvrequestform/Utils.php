@@ -11,6 +11,7 @@ class CRM_Yhvrequestform_Utils {
       'program' => 'Program',
       'funder' => 'Funder',
       'job' => 'Job',
+      'job_description' => 'Job_Description_Duties',
       'languages' => 'Languages',
       'computer_skills' => 'Computer_Skills',
       'tb_screening' => 'TB_Screening',
@@ -65,6 +66,17 @@ class CRM_Yhvrequestform_Utils {
       $returnValues[$value['value']] = $value['description'];
     }
     return $returnValues;
+  }
+
+  public static function createLiaisonContact($email) {
+    $contact = civicrm_api3('Email', 'get', ['sequential' => 1, 'email' => $email, 'return' => ['contact_id']]);
+    if (!empty($contact['values'][0]['contact_id'])) {
+      return $contact['values'][0]['contact_id'];
+    }
+    else {
+      $contact = civicrm_api3('Contact', 'create', ['contact_type' => 'Individual', 'email' => $email]);
+      return $contact['id'];
+    }
   }
 
   public static function getChainedSelectValues($name, $selectedVal, $previousVal = NULL) {
