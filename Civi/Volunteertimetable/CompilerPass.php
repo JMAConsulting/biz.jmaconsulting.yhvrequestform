@@ -9,10 +9,10 @@ use CRM_Yhvrequestform_ExtensionUtil as E;
 
 class CompilerPass implements CompilerPassInterface {
 
-		public function process(ContainerBuilder $container) {
-				if ($container->hasDefinition('action_provider')) {
-						$actionProviderDefinition = $container->getDefinition('action_provider');
-						$actionProviderDefinition->addMethodCall('addAction', array('updateVolunteerTimetable', 'Civi\Volunteertimetable\Actions\VolunteerTimetable', E::ts('Activity: Update Volunteer Timetable'), array()));
-				}
-		}
+  public function process(ContainerBuilder $container) {
+    if ($container->hasDefinition('action_provider')) {
+      $actionProviderDefinition = $container->getDefinition('action_provider');
+      $actionProviderDefinition->addMethodCall('addAction', array('updateVolunteerTimetable', 'Civi\Volunteertimetable\Actions\VolunteerTimetable', E::ts('Activity: Update Volunteer Timetable'), array()));
+    }
+  }
 }
