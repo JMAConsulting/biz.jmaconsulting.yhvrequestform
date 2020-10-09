@@ -66,11 +66,11 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
     $this->assign('languagesPreHelp', $Languages['help_pre']);
     $this->assign('languagesPostHelp', $Languages['help_post']);
 
-    $this->addYesNo('computer_skills', ts($Computer_Skills['label']), ['allowClear' => TRUE]);
+    $this->addYesNo('computer_skills', ts($Computer_Skills['label']), ['allowClear' => TRUE], TRUE);
     $this->assign('computerPreHelp', $Computer_Skills['help_pre']);
     $this->assign('computerPostHelp', $Computer_Skills['help_post']);
 
-    $this->addYesNo('tb_screening', ts($TB_Screening['label']), ['allowClear' => TRUE]);
+    $this->addYesNo('tb_screening', ts($TB_Screening['label']), ['allowClear' => TRUE], TRUE);
     $this->assign('tbPreHelp', $TB_Screening['help_pre']);
     $this->assign('tbPostHelp', $TB_Screening['help_post']);
 
@@ -78,7 +78,7 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
     $this->assign('policePreHelp', $Police_Check['help_pre']);
     $this->assign('policePostHelp', $Police_Check['help_post']);
 
-    $this->addYesNo('vehicle', ts($Vehicle['label']), ['allowClear' => TRUE]);
+    $this->addYesNo('vehicle', ts($Vehicle['label']), ['allowClear' => TRUE], TRUE);
     $this->assign('vehiclePreHelp', $Vehicle['help_pre']);
     $this->assign('vehiclePostHelp', $Vehicle['help_post']);
 
@@ -86,7 +86,7 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
     $this->assign('otherPreHelp', $Other_Skills['help_pre']);
     $this->assign('otherPostHelp', $Other_Skills['help_post']);
 
-    $this->addRadio('type_of_request', ts($Type_Of_Request['label']), ['one_time' => ts('One Time'), 'recurring' => ts('Recurring')]);
+    $this->addRadio('type_of_request', ts($Type_Of_Request['label']), ['one_time' => ts('One Time'), 'recurring' => ts('Recurring')], [], NULL, 'TRUE');
     $this->assign('requestPreHelp', $Type_Of_Request['help_pre']);
     $this->assign('requestPostHelp', $Type_Of_Request['help_post']);
 
@@ -128,7 +128,10 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
 
   public function setDefaultValues() {
     $defaults = [
-        'request_date' => date('Y-m-d'),
+      'request_date' => date('Y-m-d'),
+      'computer_skills' => 0,
+      'vehicle' => 0,
+      'duration' => 2,
     ];
     return $defaults;
   }
