@@ -182,6 +182,13 @@ function yhvrequestform_civicrm_buildForm($formName, &$form) {
         }
       }
     }
+    if (in_array($form->_action, [CRM_Core_Action::ADD, CRM_Core_Action::UPDATE])) {
+      CRM_Core_Resources::singleton()->addScript(
+        "CRM.$(function($) {
+          $('tr.crm-activity-form-block-duration td.view-value .description').text('hours');
+        });
+      ");	    
+    }
   }
 }
 

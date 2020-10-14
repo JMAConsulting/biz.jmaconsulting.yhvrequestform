@@ -11,7 +11,12 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
   public function buildQuickForm() {
     CRM_Utils_System::setTitle('Volunteer Request Form');
     foreach (CRM_Yhvrequestform_Utils::getCustomFields() as $customField) {
-      $$customField = CRM_Yhvrequestform_Utils::getCustomFieldDetails($customField);
+      if (in_array($customField, ['Job', 'Location', 'Division', 'Program', 'Type_Of_Request'])) {
+        $$customField = CRM_Yhvrequestform_Utils::getCustomFieldDetails($customField);
+      }
+      else {
+	$$customField = CRM_Yhvrequestform_Utils::getCustomFieldDetails($customField, VOLUNTEER_REQUEST);
+      }
     }
 
     $this->add('select', 'location', ts($Location['label']), ['' => '- select -'] + CRM_Yhvrequestform_Utils::getLocationFieldOptions('Location'), TRUE);
@@ -74,7 +79,7 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
     $this->assign('tbPreHelp', $TB_Screening['help_pre']);
     $this->assign('tbPostHelp', $TB_Screening['help_post']);
 
-    $this->addYesNo('police_check', ts($Police_Check['label']), ['allowClear' => TRUE]);
+    $this->addYesNo('police_check', ts($Police_Check['label']), ['allowClear' => TRUE], TRUE);
     $this->assign('policePreHelp', $Police_Check['help_pre']);
     $this->assign('policePostHelp', $Police_Check['help_post']);
 
@@ -196,7 +201,7 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
       }
 
       CRM_Core_Session::setStatus(ts("Thank You!"), ts("Your volunteer request has been successfully submitted"), "success");
-      CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/dashboard', 'reset=1'));
+      CRM_Utils_System::redirect('http://yhv.jmaconsulting.biz/request-submitted-successfully/');
     }
     catch (CiviCRM_API3_Exception $e) {
       // Handle error here.
