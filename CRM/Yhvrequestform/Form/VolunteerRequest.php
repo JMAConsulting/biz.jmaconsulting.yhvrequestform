@@ -132,6 +132,7 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
       'computer_skills' => 0,
       'vehicle' => 0,
       'duration' => 2,
+      'type_of_request' => 'recurring',
     ];
     return $defaults;
   }
