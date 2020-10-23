@@ -244,6 +244,14 @@ function yhvrequestform_amend_args($args, $shortcode_atts) {
 function yhvrequestform_civicrm_tabset($tabsetName, &$tabs, $context) {
   if ($tabsetName == 'civicrm/contact/view') {
     $contactId = $context['contact_id'];
+    $result = civicrm_api3('Contact', 'get', [
+      'sequential' => 1,
+      'return' => ["contact_sub_type"],
+      'id' => $contactId,
+    ])['values'];
+    if (!in_array('Volunteer', $result[0]['contact_sub_type'])) {
+      return;
+    }
     $url = CRM_Utils_System::url('civicrm/volunteertimetable', "reset=1&snippet=1&force=1&cid=$contactId");
     $tabs[] = [
       'id' => 'volunteer-timetable',
