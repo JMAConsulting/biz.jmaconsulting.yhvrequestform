@@ -23,4 +23,16 @@
     <is_public>true</is_public>
     <is_frontend>true</is_frontend>
   </item>
+  <item>
+    <path>civicrm/volunteertimetable</path>
+    <page_callback>CRM_Yhvrequestform_Page_VolunteerTimetable</page_callback>
+    <title>Volunteer Availability</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
+  <item>
+    <path>civicrm/volunteertimetableedit</path>
+    <page_callback>CRM_Yhvrequestform_Form_VolunteerTimetableEdit</page_callback>
+    <title>Edit Volunteer Availability</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
 </menu>

@@ -17,20 +17,7 @@ class VolunteerTimetable extends AbstractAction {
    * @return SpecificationBag
    */
   public function getConfigurationSpecification() {
-    return new SpecificationBag(array(
-      /**
-       * The parameters given to the Specification object are:
-       * @param string $name
-       * @param string $dataType
-       * @param string $title
-       * @param bool $required
-       * @param mixed $defaultValue
-       * @param string|null $fkEntity
-       * @param array $options
-       * @param bool $multiple
-       */
-        new Specification('subject', 'String', E::ts('Default Subject')),
-    ));
+    return new SpecificationBag();
   }
 
   /**
@@ -39,7 +26,7 @@ class VolunteerTimetable extends AbstractAction {
    * @return SpecificationBag
    */
   public function getParameterSpecification() {
-    $specs = [new Specification('id', 'Integer', E::ts('Activity ID'), true)];
+    $specs = [new Specification('id', 'Integer', E::ts('Contact ID'), true)];
     $timePeriods = \CRM_Core_OptionGroup::values('yhv_time_period');
     $days = \CRM_Core_OptionGroup::values('yhv_days');
     for ($i = 1; $i <= count($timePeriods); $i++) {
@@ -76,18 +63,18 @@ class VolunteerTimetable extends AbstractAction {
    */
   protected function doAction(ParameterBagInterface $parameters, ParameterBagInterface $output) {
     // Get the contact and the event.
-    $activityParams['id'] = $parameters->getParameter('id');
+    $contactParams['entity_id'] = $parameters->getParameter('id');
     $timePeriods = \CRM_Core_OptionGroup::values('yhv_time_period');
     $days = \CRM_Core_OptionGroup::values('yhv_days');
     for ($i = 1; $i <= count($timePeriods); $i++) {
       for ($j = 1; $j <= count($days); $j++) {
         $name = $j . '_' . $i;
-        $activityParams[$name] = $parameters->getParameter($name);
+        $contactParams[$name] = $parameters->getParameter($name);
       }
     }
     try {
       // Save the timetable to the activity.
-      \CRM_Yhvrequestform_BAO_VolunteerTimetable::add($activityParams['id'], $activityParams, TRUE);
+      \CRM_Yhvrequestform_BAO_VolunteerTimetable::add($contactParams['id'], $contactParams, TRUE, 'civicrm_contact');
     } catch (\Exception $e) {
       // Do nothing.
     }

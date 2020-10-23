@@ -19,16 +19,17 @@
   </primaryKey>
 
   <field>
-    <name>activity_id</name>
+    <name>entity_id</name>
     <type>int unsigned</type>
-    <comment>FK to Activity</comment>
+    <comment>FK to Entity</comment>
   </field>
-  <foreignKey>
-    <name>activity_id</name>
-    <table>civicrm_activity</table>
-    <key>id</key>
-    <onDelete>CASCADE</onDelete>
-  </foreignKey>
+
+  <field>
+    <name>entity_table</name>
+    <type>varchar</type>
+    <length>255</length>
+    <comment>Entity table</comment>
+  </field>
 
   <field>
     <name>day</name>

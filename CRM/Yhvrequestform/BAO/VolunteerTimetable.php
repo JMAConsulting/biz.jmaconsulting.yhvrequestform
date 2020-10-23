@@ -32,20 +32,21 @@ class CRM_Yhvrequestform_BAO_VolunteerTimetable extends CRM_Yhvrequestform_DAO_V
     if ($instance->find()) {
       while ($instance->fetch()) {
         $returnValues[$instance->id] = [
-            'activity_id' => $instance->activity_id,
-            'day' => $instance->day,
-            'time' => $instance->time,
-            'number_of_volunteers' => $instance->number_of_volunteers,
+          'entity_id' => $instance->entity_id,
+          'entity_table' => $instance->entity_table,
+          'day' => $instance->day,
+          'time' => $instance->time,
+          'number_of_volunteers' => $instance->number_of_volunteers,
         ];
       }
     }
     return $returnValues;
   }
 
-  public static function add($activityId, $params, $update = FALSE) {
+  public static function add($entityId, $params, $update = FALSE, $entityTable = 'civicrm_activity') {
     if ($update) {
       // Delete all values from database pertaining to activity id.
-      self::deleteTimeTable($activityId);
+      self::deleteTimeTable($entityId, $entityTable);
     }
     $timePeriods = CRM_Core_OptionGroup::values('yhv_time_period');
     $days = CRM_Core_OptionGroup::values('yhv_days');
@@ -62,7 +63,8 @@ class CRM_Yhvrequestform_BAO_VolunteerTimetable extends CRM_Yhvrequestform_DAO_V
         }
         $items = explode('_', $key);
         $timeTableParams = [
-            'activity_id' => (int) $activityId,
+            'entity_id' => (int) $entityId,
+            'entity_table' => $entityTable,
             'day' => (int) $items[0],
             'time' => (int) $items[1],
             'number_of_volunteers' => $value,
@@ -73,7 +75,7 @@ class CRM_Yhvrequestform_BAO_VolunteerTimetable extends CRM_Yhvrequestform_DAO_V
     }
   }
 
-  public static function deleteTimeTable($activityId) {
-    CRM_Core_DAO::executeQuery("DELETE FROM civicrm_volunteer_timetable WHERE activity_id = %1", [1 => [$activityId, 'Integer']]);
+  public static function deleteTimeTable($entityId, $entityTable) {
+    CRM_Core_DAO::executeQuery("DELETE FROM civicrm_volunteer_timetable WHERE entity_id = %1 AND entity_table = %2", [1 => [$entityId, 'Integer'], 2 => [$entityTable, 'String']]);
   }
 }

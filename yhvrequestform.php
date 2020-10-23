@@ -161,20 +161,18 @@ function yhvrequestform_civicrm_buildForm($formName, &$form) {
     if (in_array($form->_action, [CRM_Core_Action::VIEW, CRM_Core_Action::UPDATE])) {
       // Render the timetable if this is a volunteer request activity.
       $activityTypes = CRM_Activity_BAO_Activity::buildOptions('activity_type_id');
-      if (in_array($activityTypes[$form->_activityTypeId], ['Volunteer Request', 'Volunteer Application'])) {
+      if (in_array($activityTypes[$form->_activityTypeId], ['Volunteer Request'])) {
         // Render the grid.
-        if ($activityTypes[$form->_activityTypeId] == 'Volunteer Request') {
-          CRM_Yhvrequestform_Utils::renderGridElements($form);
-        }
-        else {
-          CRM_Yhvrequestform_Utils::renderGridElements($form, TRUE);
-        }
+        CRM_Yhvrequestform_Utils::renderGridElements($form);
         CRM_Core_Region::instance('page-body')->add(array(
             'template' => 'CRM/Yhvrequestform/Form/VolunteerTimetableView.tpl',
         ));
 
         // Set defaults.
-        $params = ['activity_id' => $form->_activityId];
+        $params = [
+          'entity_id' => $form->_activityId,
+          'entity_table' => 'civicrm_activity',
+        ];
         $timeTable = CRM_Yhvrequestform_BAO_VolunteerTimetable::getTimeTable($params);
         if (!empty($timeTable)) {
           $timeTableDefaults = CRM_Yhvrequestform_Utils::getFormattedValues($timeTable);
@@ -202,7 +200,7 @@ function yhvrequestform_civicrm_postProcess($formName, $form) {
   if ($formName == "CRM_Activity_Form_Activity") {
     $activityTypes = CRM_Activity_BAO_Activity::buildOptions('activity_type_id');
     if ($activityTypes[$form->_activityTypeId] == "Volunteer Request") {
-      CRM_Yhvrequestform_BAO_VolunteerTimetable::add($form->_activityId, $form->_submitValues, TRUE);
+      CRM_Yhvrequestform_BAO_VolunteerTimetable::add($form->_activityId, $form->_submitValues, TRUE, 'civicrm_activity');
     }
   }
 }
@@ -241,6 +239,19 @@ function yhvrequestform_amend_args($args, $shortcode_atts) {
     $args['action'] = '';
   }
   return $args;
+}
+
+function yhvrequestform_civicrm_tabset($tabsetName, &$tabs, $context) {
+  if ($tabsetName == 'civicrm/contact/view') {
+    $contactId = $context['contact_id'];
+    $url = CRM_Utils_System::url('civicrm/volunteertimetable', "reset=1&snippet=1&force=1&cid=$contactId");
+    $tabs[] = [
+      'id' => 'volunteer-timetable',
+      'url' => $url,
+      'title' => 'Volunteer Availability',
+      'weight' => 300,
+    ];
+  }
 }
 
 // --- Functions below this ship commented out. Uncomment as required. ---

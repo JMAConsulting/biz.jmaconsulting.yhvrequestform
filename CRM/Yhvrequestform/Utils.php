@@ -167,6 +167,25 @@ class CRM_Yhvrequestform_Utils {
     return [$days, $gridElements];
   }
 
+  public static function renderGrid($page, $timeTable) {
+    $timePeriods = CRM_Core_OptionGroup::values('yhv_time_period');
+    $days = CRM_Core_OptionGroup::values('yhv_days');
+    for ($i = 1; $i <= count($timePeriods); $i++) {
+      for ($j = 1; $j <= count($days); $j++) {
+        $gridElements[$timePeriods[$i]][$j] = " ";
+        foreach ($timeTable as $row) {
+          if ($row['day'] == $j && $row['time'] == $i) {
+            $gridElements[$timePeriods[$i]][$j] = "Yes";
+          }
+        }
+      }
+    }
+
+    $page->assign('gridElements', $gridElements);
+    $page->assign('yhvDays', $days);
+    return [$days, $gridElements];
+  }
+
   public static function getFormattedValues($timeTable) {
     foreach ($timeTable as $elements) {
       $gridValues[$elements['day'] . '_' . $elements['time']] = $elements['number_of_volunteers'];
