@@ -79,9 +79,59 @@ class CRM_Yhvrequestform_Utils {
     }
   }
 
+  public static function getChainedSelectValue($name, $selectedVal) {
+    $validOptions = $list = [];
+    if ($selectedVal == 'division') {
+      CRM_Core_Session::singleton()->set('location', $name);
+    }
+    if (strtolower($selectedVal) == "division") {
+      // Filter according to the location.
+      $lookup = CRM_Core_DAO::executeQuery("SELECT Division FROM civicrm_volunteer_lookup WHERE Location = %1 GROUP BY Division", [1 => [$name, 'String']])->fetchAll();
+      if (!empty($lookup)) {
+        foreach ($lookup as $option) {
+          $validOptions[$option['Division']] = $option['Division'];
+        }
+      }
+    }
+    if (strtolower($selectedVal) == "program") {
+      $previousVal = CRM_Core_Session::singleton()->get('location');
+      // Filter according to the location and division.
+      $lookup = CRM_Core_DAO::executeQuery("SELECT Program FROM civicrm_volunteer_lookup WHERE Location = %1 AND Division = %2 GROUP BY Program", [1 => [$previousVal, 'String'], 2 => [$name, 'String']])->fetchAll();
+      $isAny = FALSE;
+      if (!empty($lookup)) {
+        foreach ($lookup as $option) {
+          if ($option['Program'] == 'Any') {
+            $isAny = TRUE;
+            break;
+          }
+          $validOptions[$option['Program']] = $option['Program'];
+        }
+      }
+      if ($isAny) {
+        $validOptions = [
+          'Administration' => 'Administration',
+          'Activation' => 'Activation',
+          'Chaplain' => 'Chaplain',
+          'Environmental Services' => 'Environmental Services',
+          'Food Service' => 'Food Service',
+          'Nursing' => 'Nursing',
+          'Service Quality' => 'Service Quality',
+        ];
+      }
+    }
+    //$options = self::getCustomFieldOptions($name);
+
+    //$options = array_intersect_assoc($validOptions, $options);
+    foreach ($validOptions as $key => $value) {
+      $list[$key] = $value;
+    }
+
+    return $list;
+  }
+
   public static function getChainedSelectValues($name, $selectedVal, $previousVal = NULL) {
     $validOptions = [];
-    if ($name == "Division") {
+    if (strtolower($name) == "division") {
       // Filter according to the location.
       $lookup = CRM_Core_DAO::executeQuery("SELECT Division FROM civicrm_volunteer_lookup WHERE Location = %1 GROUP BY Division", [1 => [$selectedVal, 'String']])->fetchAll();
       if (!empty($lookup)) {
@@ -90,7 +140,7 @@ class CRM_Yhvrequestform_Utils {
         }
       }
     }
-    if ($name == "Program") {
+    if (strtolower($name) == "program") {
       // Filter according to the location and division.
       $lookup = CRM_Core_DAO::executeQuery("SELECT Program FROM civicrm_volunteer_lookup WHERE Location = %1 AND Division = %2 GROUP BY Program", [1 => [$previousVal, 'String'], 2 => [$selectedVal, 'String']])->fetchAll();
       $isAny = FALSE;
@@ -129,6 +179,7 @@ class CRM_Yhvrequestform_Utils {
   }
 
   public static function getFunder($params) {
+    $clauses[] = 1;
     if (!empty($params['location'])) {
       $clauses[] = "Location = '" . $params['location'] . "'";
     }

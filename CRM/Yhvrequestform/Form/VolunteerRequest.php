@@ -8,6 +8,96 @@ use CRM_Yhvrequestform_ExtensionUtil as E;
  * @see https://docs.civicrm.org/dev/en/latest/framework/quickform/
  */
 class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
+
+  /**
+   * @var array
+   * @internal to keep track of chain-select fields
+   */
+  private $_chainSelectFields = [];
+
+  /**
+   * Render form and return contents.
+   *
+   * @return string
+   */
+  public function toSmarty() {
+    self::preProcessChainSelectFields();
+    $renderer = $this->getRenderer();
+    $this->accept($renderer);
+    $content = $renderer->toArray();
+    $content['formName'] = $this->getName();
+    $content['formClass'] = CRM_Utils_System::getClassName($this);
+    return $content;
+  }
+
+  /**
+   * Set options and attributes for chain select fields based on the controlling field's value
+   */
+  private function preProcessChainSelectFields() {
+    foreach ($this->_chainSelectFields as $control => $target) {
+      // The 'target' might get missing if extensions do removeElement() in a form hook.
+      if ($this->elementExists($target)) {
+        $targetField = $this->getElement($target);
+        $targetType = $targetField->getAttribute('data-callback') == 'civicrm/getdept' ? 'division' : 'program';
+        $options = [];
+        // If the control field is on the form, setup chain-select and dynamically populate options
+        if ($this->elementExists($control)) {
+          $controlField = $this->getElement($control);
+          $controlType = $targetType == 'division' ? 'division' : 'program';
+
+          $targetField->setAttribute('class', $targetField->getAttribute('class') . ' crm-chain-select-target');
+
+          $css = (string) $controlField->getAttribute('class');
+          $controlField->updateAttributes([
+            'class' => ($css ? "$css " : 'crm-select2 ') . 'crm-chain-select-control',
+            'data-target' => $target,
+          ]);
+          $controlValue = $controlField->getValue()[0];
+          if ($controlValue) {
+            $options = CRM_Yhvrequestform_Utils::getChainedSelectValue($controlValue, $controlType);
+            if (!$options) {
+              $targetField->setAttribute('placeholder', $targetField->getAttribute('data-none-prompt'));
+            }
+          }
+          else {
+            $targetField->setAttribute('placeholder', $targetField->getAttribute('data-empty-prompt'));
+            $targetField->setAttribute('disabled', 'disabled');
+          }
+        }
+        // Control field not present - fall back to loading default options
+        else {
+          $options = [];
+        }
+        if (!$targetField->getAttribute('multiple')) {
+          $options = ['' => $targetField->getAttribute('placeholder')] + $options;
+          $targetField->removeAttribute('placeholder');
+        }
+        $targetField->_options = [];
+        $targetField->loadArray($options);
+      }
+    }
+  }
+
+  /**
+   * Create a chain-select target field. All settings are optional; the defaults usually work.
+   *
+   * @param string $elementName
+   * @param array $settings
+   *
+   * @return HTML_QuickForm_Element
+   */
+  public function addChainSelect($elementName, $settings = []) {
+    $props = $settings;
+    CRM_Utils_Array::remove($props, 'label', 'required', 'control_field', 'context');
+    $props['class'] = (empty($props['class']) ? '' : "{$props['class']} ") . 'crm-select2';
+    $props['data-select-prompt'] = $props['placeholder'];
+    $props['data-name'] = $elementName;
+
+    $this->_chainSelectFields[$settings['control_field']] = $elementName;
+
+    return $this->add('select', $elementName, $settings['label'], NULL, $settings['required'], $props);
+  }
+
   public function buildQuickForm() {
     CRM_Utils_System::setTitle('Volunteer Request Form');
     foreach (CRM_Yhvrequestform_Utils::getCustomFields() as $customField) {
@@ -15,7 +105,7 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
         $$customField = CRM_Yhvrequestform_Utils::getCustomFieldDetails($customField);
       }
       else {
-	$$customField = CRM_Yhvrequestform_Utils::getCustomFieldDetails($customField, VOLUNTEER_REQUEST);
+	    $$customField = CRM_Yhvrequestform_Utils::getCustomFieldDetails($customField, VOLUNTEER_REQUEST);
       }
     }
 
@@ -58,6 +148,8 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
     $this->freeze('request_date');
 
     $this->add('text', 'liaison_staff', ts('Liaison Staff'), [],TRUE);
+    $emailRegex = '/^([a-zA-Z0-9&_?\/`!|#*$^%=~{}+\'-]+|"([\x00-\x0C\x0E-\x21\x23-\x5B\x5D-\x7F]|\\[\x00-\x7F])*")(\.([a-zA-Z0-9&_?\/`!|#*$^%=~{}+\'-]+|"([\x00-\x0C\x0E-\x21\x23-\x5B\x5D-\x7F]|\\[\x00-\x7F])*"))*@yeehong.com$/';
+    $this->addRule('liaison_staff', ts('Please provide a valid Yee Hong email address'), 'regex', $emailRegex);
 
     $this->add('select', 'job', ts($Job['label']), ['' => '- select -'] + CRM_Yhvrequestform_Utils::getCustomFieldOptions('Job'), TRUE);
     $this->assign('jobPreHelp', $Job['help_pre']);
@@ -143,6 +235,32 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
   }
 
   /**
+   * Validate country / state / county match and suppress unwanted "required" errors
+   */
+  private function validateChainSelectFields() {
+    foreach ($this->_chainSelectFields as $control => $target) {
+      if ($this->elementExists($control) && $this->elementExists($target)) {
+        $controlValue = (array) $this->getElementValue($control);
+        $targetField = $this->getElement($target);
+        $controlType = $targetField->getAttribute('data-callback') == 'civicrm/getdept' ? 'division' : 'program';
+        $targetValue = array_filter((array) $targetField->getValue());
+        if ($targetValue || $this->getElementError($target)) {
+          $options = CRM_Yhvrequestform_Utils::getChainedSelectValue($controlValue, $controlType);
+          if ($targetValue) {
+            if (!array_intersect($targetValue, array_keys($options))) {
+              $this->setElementError($target, $controlType == 'division' ? ts('Division does not fall under the given Location') : ts('Program does not fall under the Division and Location'));
+            }
+          }
+          // Suppress "required" error for field if it has no options
+          elseif (!$options) {
+            $this->setElementError($target, NULL);
+          }
+        }
+      }
+    }
+  }
+
+  /**
    * Performs the server side validation.
    * @since     1.0
    * @return bool
@@ -150,14 +268,18 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
    * @throws    HTML_QuickForm_Error
    */
   public function validate() {
+    HTML_QuickForm_Page::validate();
+
+    self::validateChainSelectFields();
+
     $hookErrors = [];
 
     CRM_Utils_Hook::validateForm(
-        get_class($this),
-        $this->_submitValues,
-        $this->_submitFiles,
-        $this,
-        $hookErrors
+      get_class($this),
+      $this->_submitValues,
+      $this->_submitFiles,
+      $this,
+      $hookErrors
     );
 
     if (!empty($hookErrors)) {
