@@ -165,9 +165,9 @@ class CRM_Yhvrequestform_Utils {
         ];
       }
     }
-    //$options = self::getCustomFieldOptions($name);
+    $options = self::getCustomFieldOptions($name);
 
-    //$options = array_intersect_assoc($validOptions, $options);
+    $options = array_intersect_assoc($validOptions, $options);
     foreach ($validOptions as $key => $value) {
       $list[] = [
         'key' => $key,
