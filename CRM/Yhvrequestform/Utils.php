@@ -19,7 +19,6 @@ class CRM_Yhvrequestform_Utils {
       'vehicle' => 'Vehicle',
       'other_skills' => 'Other_Skills',
       'type_of_request' => 'Type_Of_Request',
-      'duration' => 'Duration',
       'start_date' => 'Start_Date',
       'end_date' => 'End_Date',
       'other_remarks' => 'Other_Remarks',

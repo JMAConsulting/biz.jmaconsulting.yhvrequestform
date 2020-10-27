@@ -95,9 +95,9 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
     $this->assign('requestPreHelp', $Type_Of_Request['help_pre']);
     $this->assign('requestPostHelp', $Type_Of_Request['help_post']);
 
-    $this->add('text', 'duration', ts($Duration['label']));
-    $this->assign('durationPreHelp', $Duration['help_pre']);
-    $this->assign('durationPostHelp', $Duration['help_post']);
+    $this->add('text', 'duration', ts('Duration Of Shift'));
+    $this->assign('durationPreHelp', 'Example: 2 hours');
+    $this->assign('durationPostHelp', '');
 
     $this->add('datepicker', 'start_date', ts($Start_Date['label']), [], FALSE, ['time' => FALSE]);
     $this->assign('startPreHelp', $Start_Date['help_pre']);
