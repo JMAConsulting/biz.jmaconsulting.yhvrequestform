@@ -58,6 +58,8 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
     $this->freeze('request_date');
 
     $this->add('text', 'liaison_staff', ts('Liaison Staff'), [],TRUE);
+    $emailRegex = '/^([a-zA-Z0-9&_?\/`!|#*$^%=~{}+\'-]+|"([\x00-\x0C\x0E-\x21\x23-\x5B\x5D-\x7F]|\\[\x00-\x7F])*")(\.([a-zA-Z0-9&_?\/`!|#*$^%=~{}+\'-]+|"([\x00-\x0C\x0E-\x21\x23-\x5B\x5D-\x7F]|\\[\x00-\x7F])*"))*@yeehong.com$/';
+    $this->addRule('liaison_staff', ts('Please provide a valid email address'), 'regex', $emailRegex);
 
     $this->add('select', 'job', ts($Job['label']), ['' => '- select -'] + CRM_Yhvrequestform_Utils::getCustomFieldOptions('Job'), TRUE);
     $this->assign('jobPreHelp', $Job['help_pre']);
