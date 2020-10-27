@@ -293,7 +293,7 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
     $customFields = CRM_Yhvrequestform_Utils::getCustomFields();
     $customParams = [];
     foreach ($customFields as $field => $name) {
-      if (!empty($values[$field])) {
+      if (!empty($values[$field]) || $values[$field] == '0') {
         $customName = CRM_Yhvrequestform_Utils::getCustomFieldID($name);
         $customParams[$customName] = $values[$field];
       }
