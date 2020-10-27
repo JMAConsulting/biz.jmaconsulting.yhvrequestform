@@ -193,7 +193,7 @@ class CRM_Yhvrequestform_Utils {
     return $gridValues;
   }
 
-  public static function getCustomFieldID($name, $groupId = VOLUNTEERING_CUSTOM) {
-    return 'custom_' . CRM_Core_DAO::singleValueQuery("SELECT id FROM civicrm_custom_field WHERE name = %1 AND custom_group_id = %2", [1 => [$name, 'String'], 2 => [$groupId, 'Integer']]);
+  public static function getCustomFieldID($name) {
+    return 'custom_' . CRM_Core_DAO::singleValueQuery("SELECT id FROM civicrm_custom_field WHERE name = %1 AND custom_group_id IN (%2,%3)", [1 => [$name, 'String'], 2 => [VOLUNTEERING_CUSTOM, 'Integer'], 3 => [VOLUNTEER_REQUEST, 'Integer']]);
   }
 }
