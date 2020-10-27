@@ -67,7 +67,7 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
     $this->assign('jobdescPreHelp', $Job_Description_Duties['help_pre']);
     $this->assign('jobdescPostHelp', $Job_Description_Duties['help_post']);
 
-    $this->add('select', 'languages', ts($Languages['label']), CRM_Yhvrequestform_Utils::getCustomFieldOptions('Languages'), FALSE, ['class' => 'crm-select2', 'multiple' => TRUE, 'placeholder' => ts('- select -')]);
+    $this->add('select', 'languages', ts($Languages['label']), CRM_Yhvrequestform_Utils::getCustomFieldOptions('Languages', VOLUNTEER_REQUEST), FALSE, ['class' => 'crm-select2', 'multiple' => TRUE, 'placeholder' => ts('- select -')]);
     $this->assign('languagesPreHelp', $Languages['help_pre']);
     $this->assign('languagesPostHelp', $Languages['help_post']);
 

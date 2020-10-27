@@ -45,11 +45,11 @@ class CRM_Yhvrequestform_Utils {
     return $returnValues;
   }
 
-  public static function getCustomFieldOptions($name) {
+  public static function getCustomFieldOptions($name, $group = VOLUNTEERING_CUSTOM) {
     $optionGroupName = CRM_Core_DAO::singleValueQuery("SELECT g.name
         FROM civicrm_custom_field c
         INNER JOIN civicrm_option_group g ON g.id = c.option_group_id
-        WHERE c.name = %1 AND c.custom_group_id = %2", [1 => [$name, 'String'], 2 => [VOLUNTEERING_CUSTOM, 'Integer']]);
+        WHERE c.name = %1 AND c.custom_group_id = %2", [1 => [$name, 'String'], 2 => [$group, 'Integer']]);
     if (empty($optionGroupName)) {
       return [];
     }
@@ -61,7 +61,8 @@ class CRM_Yhvrequestform_Utils {
         FROM civicrm_custom_field c
         INNER JOIN civicrm_option_group g ON g.id = c.option_group_id
         INNER JOIN civicrm_option_value v ON v.option_group_id = g.id
-        WHERE c.name = %1 and c.custom_group_id = %2", [1 => [$name, 'String'], 2 => [VOLUNTEERING_CUSTOM, 'Integer']])->fetchAll();
+        WHERE c.name = %1 and c.custom_group_id = %2
+        ORDER BY v.weight ASC", [1 => [$name, 'String'], 2 => [VOLUNTEERING_CUSTOM, 'Integer']])->fetchAll();
     foreach($values as $value) {
       $returnValues[$value['value']] = $value['description'];
     }

@@ -1,7 +1,6 @@
 {* HEADER *}
 
 {* FIELD EXAMPLE: OPTION 1 (AUTOMATIC LAYOUT) *}
-<legend>{ts}Department{/ts}</legend>
 
 <table class="compressed">
     <tr>
@@ -221,9 +220,10 @@
     {/if}
     <div class="clear"></div>
 </div>
+<div class="clear"></div>
 <div class="help">
     <strong>
-        The volunteer Team will strive to find the volunteer(s) as requested. Mandatory procedures such as TB test/police check and seasonal fluctuation of volunteer availability may delay the process.
+        The volunteer team will strive to find the volunteer(s) as requested. Mandatory procedures such as TB test/police check and seasonal fluctuation of volunteer availability may delay the process.
     </strong>
 </div>
 <div class="crm-submit-buttons">
