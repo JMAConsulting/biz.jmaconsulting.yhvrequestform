@@ -183,7 +183,7 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
     $this->assign('otherPreHelp', $Other_Skills['help_pre']);
     $this->assign('otherPostHelp', $Other_Skills['help_post']);
 
-    $this->addRadio('type_of_request', ts($Type_Of_Request['label']), ['one_time' => ts('One Time'), 'recurring' => ts('Recurring')], [], NULL, 'TRUE');
+    $this->addRadio('type_of_request', ts($Type_Of_Request['label']), CRM_Yhvrequestform_Utils::getCustomFieldOptions('Type_Of_Request', VOLUNTEERING_CUSTOM), [], NULL, 'TRUE');
     $this->assign('requestPreHelp', $Type_Of_Request['help_pre']);
     $this->assign('requestPostHelp', $Type_Of_Request['help_post']);
 
