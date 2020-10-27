@@ -87,7 +87,7 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
     $this->assign('vehiclePreHelp', $Vehicle['help_pre']);
     $this->assign('vehiclePostHelp', $Vehicle['help_post']);
 
-    $this->add('text', 'other_skills', ts($Other_Skills['label']));
+    $this->add('textarea', 'other_skills', ts($Other_Skills['label']), 'rows=5, cols=50');
     $this->assign('otherPreHelp', $Other_Skills['help_pre']);
     $this->assign('otherPostHelp', $Other_Skills['help_post']);
 
