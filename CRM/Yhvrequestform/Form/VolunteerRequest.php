@@ -246,13 +246,8 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
         $targetValue = array_filter((array) $targetField->getValue());
         if ($targetValue || $this->getElementError($target)) {
           $options = CRM_Yhvrequestform_Utils::getChainedSelectValue($controlValue, $controlType);
-          if ($targetValue) {
-            if (!array_intersect($targetValue, array_keys($options))) {
-              $this->setElementError($target, $controlType == 'division' ? ts('Division does not fall under the given Location') : ts('Program does not fall under the Division and Location'));
-            }
-          }
           // Suppress "required" error for field if it has no options
-          elseif (!$options) {
+          if (!$options) {
             $this->setElementError($target, NULL);
           }
         }
