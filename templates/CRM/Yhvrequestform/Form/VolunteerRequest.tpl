@@ -221,6 +221,7 @@
     <div class="clear"></div>
 </div>
 <div class="clear"></div>
+<br/>
 <div class="help">
     <strong>
         The volunteer team will strive to find the volunteer(s) as requested. Mandatory procedures such as TB test/police check and seasonal fluctuation of volunteer availability may delay the process.

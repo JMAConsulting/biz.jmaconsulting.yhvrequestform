@@ -208,6 +208,7 @@ class CRM_Yhvrequestform_Utils {
         }
         else {
           $form->add('text', $j . '_' . $i, ts($j . '_' . $i), ['size' => 5]);
+          $form->addRule($j . '_' . $i, ts('Please enter a number'), 'numeric');
         }
         $gridElements[$timePeriods[$i]][$j] = $j . '_' . $i;
       }
