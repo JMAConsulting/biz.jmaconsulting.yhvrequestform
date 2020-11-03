@@ -74,7 +74,7 @@ class VolunteerTimetable extends AbstractAction {
     }
     try {
       // Save the timetable to the activity.
-      \CRM_Yhvrequestform_BAO_VolunteerTimetable::add($contactParams['id'], $contactParams, TRUE, 'civicrm_contact');
+      \CRM_Yhvrequestform_BAO_VolunteerTimetable::add($contactParams['entity_id'], $contactParams, TRUE, 'civicrm_contact');
     } catch (\Exception $e) {
       // Do nothing.
     }
