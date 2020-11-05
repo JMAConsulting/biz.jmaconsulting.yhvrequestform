@@ -238,6 +238,27 @@ class CRM_Yhvrequestform_Utils {
     return [$days, $gridElements];
   }
 
+  function setStatus($oldStatus = NULL, $cid, $submitValues) {
+    if (!empty($cid)) {
+      $submitKeys = array_keys($submitValues);
+      $key = preg_grep('/^' . STATUS . '_[\d]*/', $submitKeys);
+      $newStatus = reset($key);
+      if ($oldStatus != "Active" && CRM_Utils_Array::value($newStatus, $submitValues) == 'Active') {
+        // Set WP user to active.
+        $uf = civicrm_api3('UFMatch', 'get', [
+          'sequential' => 1,
+          'return' => ["uf_id"],
+          'contact_id' => $cid,
+        ]);
+        if (!empty($uf['values'][0]['uf_id'])) {
+          $u = new WP_User($uf['values'][0]['uf_id']);
+          $u->remove_role('inactive');
+          $u->add_role('subscriber');
+        }
+      }
+    }
+  }
+
   public static function getFormattedValues($timeTable) {
     foreach ($timeTable as $elements) {
       $gridValues[$elements['day'] . '_' . $elements['time']] = $elements['number_of_volunteers'];
