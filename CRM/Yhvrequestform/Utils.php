@@ -256,6 +256,19 @@ class CRM_Yhvrequestform_Utils {
           $u->add_role('subscriber');
         }
       }
+      if ($oldStatus != "Inactive" && CRM_Utils_Array::value($newStatus, $submitValues) == 'Inactive') {
+        // Set WP user to active.
+        $uf = civicrm_api3('UFMatch', 'get', [
+          'sequential' => 1,
+          'return' => ["uf_id"],
+          'contact_id' => $cid,
+        ]);
+        if (!empty($uf['values'][0]['uf_id'])) {
+          $u = new WP_User($uf['values'][0]['uf_id']);
+          $u->remove_role('subscriber');
+          $u->add_role('inactive');
+        }
+      }
     }
   }
 
