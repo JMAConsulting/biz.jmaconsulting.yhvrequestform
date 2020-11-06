@@ -267,7 +267,7 @@ function yhvrequestform_civicrm_tabset($tabsetName, &$tabs, $context) {
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_postProcess
  */
-function aoservicelisting_civicrm_postProcess($formName, &$form) {
+function yhvrequestform_civicrm_postProcess($formName, &$form) {
   if ($formName == "CRM_Contact_Form_Contact") {
     if (!empty($form->_contactId) && count(preg_grep('/^' . STATUS . '_[\d]*/', array_keys($form->_submitValues))) > 0) {
       CRM_Yhvrequestform_Utils::setStatus($form->_oldStatus, $form->_contactId, $form->_submitValues);
