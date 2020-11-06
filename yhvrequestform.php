@@ -226,6 +226,16 @@ function yhvrequestform_civicrm_preProcess($formName, &$form) {
       ),
     );
   }
+  if ($formName == "CRM_Contact_Form_Contact") {
+    if (!empty($form->_contactId) && count(preg_grep('/^' . STATUS . '_[\d]*/', array_keys($form->_submitValues))) > 0) {
+      $form->_oldStatus = civicrm_api3('Contact', 'getvalue', ['return' => STATUS, 'id' => $form->_contactId]);
+    }
+  }
+  if ($formName == "CRM_Contact_Form_Inline_CustomData") {
+    if (!empty($form->_submitValues['cid']) && count(preg_grep('/^' . STATUS . '_[\d]*/', array_keys($form->_submitValues))) > 0) {
+      $form->_oldStatus = civicrm_api3('Contact', 'getvalue', ['return' => STATUS, 'id' => $form->_contactId]);
+    }
+  }
 }
 
 if (function_exists('add_filter')) {
