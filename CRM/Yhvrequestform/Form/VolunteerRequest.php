@@ -304,7 +304,6 @@ class CRM_Yhvrequestform_Form_VolunteerRequest extends CRM_Core_Form {
         'activity_type_id' => "Volunteer Request",
         'source_contact_id' => $sourceCid,
         'target_contact_id' => $sourceCid,
-        'assignee_id' => VOLUNTEER_REQUEST_FACILITATOR,
         'status_id' => "Scheduled",
         'duration' => $values['duration'],
     ];
