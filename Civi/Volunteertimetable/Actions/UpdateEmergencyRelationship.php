@@ -137,9 +137,8 @@ class UpdateEmergencyRelationship extends AbstractAction {
       }
     }
     try {
-      // Delete existing relationship before creating.
-      \CRM_Core_DAO::executeQuery("DELETE FROM civicrm_relationship WHERE contact_id_a = %1 AND contact_id_b = %2",
-        [1 => [$relationshipParams['contact_id_a'], 'Integer'], 2 => [$relationshipParams['contact_id_b'], 'Integer']]);
+      $relationshipParams['id'] = \CRM_Core_DAO::singleValueQuery("SELECT id FROM civicrm_relationship WHERE contact_id_a = %1 AND contact_id_b = %2 AND relationship_type_id = %3",
+        [1 => [$relationshipParams['contact_id_a'], 'Integer'], 2 => [$relationshipParams['contact_id_b'], 'Integer'], 3 => [$relationshipParams['relationship_type_id'], 'Integer']]);
       // Do not use api as the api checks for an existing relationship.
       $relationship = \CRM_Contact_BAO_Relationship::add($relationshipParams);
       $relationship_id = $relationship->id;
