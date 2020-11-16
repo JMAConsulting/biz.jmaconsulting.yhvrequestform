@@ -1,6 +1,6 @@
 <?php
 
-namespace Civi\ActionProvider\Action\UpdateEmergencyRelationship;
+namespace Civi\Volunteertimetable\Actions;
 
 use \Civi\ActionProvider\Action\AbstractAction;
 use \Civi\ActionProvider\Parameter\ParameterBagInterface;
