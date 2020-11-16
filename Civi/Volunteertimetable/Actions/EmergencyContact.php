@@ -36,7 +36,7 @@ class EmergencyContact extends AbstractAction {
     $sqlParams[1] = array($parameters->getParameter('phone'), 'String');
     $sqlParams[2] = array($parameters->getParameter('first_name'), 'String');
     $sqlParams[3] = array($parameters->getParameter('last_name'), 'String');
-    $relationshipTypeId = \CRM_Core_DAO::singleValueQuery("SELECT id FROM civicrm_relationship_type WHERE name = %1", [1 => [$parameters->getParameter('relationship_type'), 'String']]);
+    $relationshipTypeId = \CRM_Core_DAO::singleValueQuery("SELECT id FROM civicrm_relationship_type WHERE name_a_b = %1", [1 => [$parameters->getParameter('relationship_type'), 'String']]);
     $sqlParams[4] = array($relationshipTypeId, 'Integer');
     $sqlParams[5] = array($parameters->getParameter('contact_id_a'), 'Integer');
 
