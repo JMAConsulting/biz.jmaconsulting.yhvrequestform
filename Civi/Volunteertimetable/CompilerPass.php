@@ -14,6 +14,7 @@ class CompilerPass implements CompilerPassInterface {
       $actionProviderDefinition = $container->getDefinition('action_provider');
       $actionProviderDefinition->addMethodCall('addAction', array('updateVolunteerTimetable', 'Civi\Volunteertimetable\Actions\VolunteerTimetable', E::ts('Activity: Update Volunteer Timetable'), array()));
       $actionProviderDefinition->addMethodCall('addAction', array('updateEmergencyContact', 'Civi\Volunteertimetable\Actions\EmergencyContact', E::ts('Contact: Update Emergency Contact'), array()));
+      $actionProviderDefinition->addMethodCall('addAction', array('UpdateEmergencyRelationship', 'Civi\Volunteertimetable\Actions\UpdateEmergencyRelationship', E::ts('Relationship: Update Emergency Contact Relationship'), array()));
     }
   }
 }
