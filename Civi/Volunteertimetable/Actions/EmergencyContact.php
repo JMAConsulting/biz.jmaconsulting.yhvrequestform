@@ -21,7 +21,7 @@ class EmergencyContact extends AbstractAction {
    * @return void
    */
   protected function doAction(ParameterBagInterface $parameters, ParameterBagInterface $output) {
-    $sql = "
+    /*$sql = "
         SELECT contact.id  AS id, 10 as weight
         FROM civicrm_contact as contact
         INNER JOIN civicrm_phone phone ON contact.id = phone.contact_id
@@ -43,6 +43,19 @@ class EmergencyContact extends AbstractAction {
     $dao = \CRM_Core_DAO::executeQuery($sql, $sqlParams);
     if ($dao->fetch()) {
       $output->setParameter('contact_id', $dao->id);
+    } */
+
+    $dupeParams = [
+      'first_name' => $parameters->getParameter('first_name'),
+      'last_name' => $parameters->getParameter('last_name'),
+      'phone' => $parameters->getParameter('phone'),
+    ];
+    $dedupeParams = \CRM_Dedupe_Finder::formatParams($dupeParams, 'Individual');
+    $dedupeParams['check_permission'] = 0;
+    $dupes = \CRM_Dedupe_Finder::dupesByParams($dedupeParams, 'Individual', NULL, [], 8);
+    $cid = \CRM_Utils_Array::value('0', $dupes, NULL);
+    if (!empty($cid)) {
+      $output->setParameter('contact_id', $cid);
     }
   }
 
