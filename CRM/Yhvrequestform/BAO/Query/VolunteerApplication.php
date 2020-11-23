@@ -65,11 +65,11 @@ class CRM_Yhvrequestform_BAO_Query_VolunteerApplication extends CRM_Contact_BAO_
 
   public function getPanesMapper(&$panes) {
 
-    $panes['Volunteer Application'] = 'civicrm_contact';
+    $panes['Volunteer Availability'] = 'civicrm_contact';
   }
 
   public function registerAdvancedSearchPane(&$panes) {
-    $panes['Volunteer Application'] = 'volunteer_application';
+    $panes['Volunteer Availability'] = 'volunteer_application';
   }
 
   public function buildAdvancedSearchPaneForm(&$form, $type) {
