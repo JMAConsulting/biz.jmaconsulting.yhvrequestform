@@ -271,6 +271,12 @@ function yhvrequestform_amend_args($args, $shortcode_atts) {
   return $args;
 }
 
+function yhvrequestform_civicrm_queryObjects (&$queryObjects, $type = 'Contact') {
+  if ($type == 'Contact') {
+    $queryObjects[] = new CRM_Yhvrequestform_BAO_Query_VolunteerApplication();
+  }
+}
+
 function yhvrequestform_civicrm_tabset($tabsetName, &$tabs, $context) {
   if ($tabsetName == 'civicrm/contact/view') {
     $contactId = $context['contact_id'];
