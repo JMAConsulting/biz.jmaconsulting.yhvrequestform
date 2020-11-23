@@ -220,6 +220,27 @@ function yhvrequestform_civicrm_postProcess($formName, $form) {
   }
 }
 
+function yhvrequestform_civicrm_pre($op, $objectName, $id, &$params) {
+  if ($objectName == 'Activity' && $op == 'create') {
+    $activityTypes = CRM_Activity_BAO_Activity::buildOptions('activity_type_id');
+    if ($activityTypes[$params['activity_type_id']] == "Volunteer" && empty($params['assignee_contact_id'])) {
+      // We check for previous application activity.
+      if (!empty($params['target_contact_id'][0])) {
+        $application = civicrm_api3('Activity', 'get', [
+          'sequential' => 1,
+          'return' => ["assignee_contact_id"],
+          'activity_type_id' => "Volunteer Application",
+          'target_contact_id' => $params['target_contact_id'][0],
+          'options' => ['limit' => 1, 'sort' => "activity_date_time DESC"],
+        ]);
+        if (!empty($application['values'][0]['assignee_contact_id'])) {
+          $params['assignee_contact_id'] = $application['values'][0]['assignee_contact_id'];
+        }
+      }
+    }
+  }
+}
+
 function yhvrequestform_civicrm_preProcess($formName, &$form) {
   if ($formName == "CRM_Core_Form_ShortCode") {
     $form->components['volunteer_request'] = array(
