@@ -50,6 +50,7 @@
             <div class="crm-section">
                 <div class="label">{$form.liaison_staff.label}</div>
                 <div class="content">{$form.liaison_staff.html}</div>
+                <div class="content"><i>Please enter your Email address here.</i></div>
                 <div class="clear"></div>
             </div>
             <div class="crm-section">
