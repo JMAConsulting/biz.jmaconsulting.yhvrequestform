@@ -223,7 +223,7 @@ function yhvrequestform_civicrm_postProcess($formName, $form) {
 function yhvrequestform_civicrm_pre($op, $objectName, $id, &$params) {
   if ($objectName == 'Activity' && $op == 'create') {
     $activityTypes = CRM_Activity_BAO_Activity::buildOptions('activity_type_id');
-    if ($activityTypes[$params['activity_type_id']] == "Volunteer" && empty($params['assignee_contact_id'])) {
+    if (in_array($activityTypes[$params['activity_type_id']], ["Volunteer", "Police Check", "TB Check"]) && empty($params['assignee_contact_id'])) {
       // We check for previous application activity.
       if (!empty($params['target_contact_id'][0])) {
         $application = civicrm_api3('Activity', 'get', [
