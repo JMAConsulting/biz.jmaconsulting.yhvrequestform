@@ -174,7 +174,7 @@
 
 <div class="crm-section">
     {if $durationPreHelp}
-        <div class="content pre-description"><i>{$durationPreHelp}</i></div>
+        <div class="content"><i>{$durationPreHelp}</i></div>
     {/if}
     <div class="label">{$form.duration.label}</div>
     <div class="content">{$form.duration.html}</div>
