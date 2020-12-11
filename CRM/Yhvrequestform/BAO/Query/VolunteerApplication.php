@@ -38,13 +38,17 @@ class CRM_Yhvrequestform_BAO_Query_VolunteerApplication extends CRM_Contact_BAO_
         continue;
       }
 
+      $param[3] = $id;
+
       $this->whereClauseSingle($param, $query);
     }
+
   }
 
   public function whereClauseSingle(&$values, &$query) {
 
     list($name, $op, $value, $grouping, $wildcard) = $values;
+
 
     $fields = $this->getFields();
 
@@ -58,9 +62,10 @@ class CRM_Yhvrequestform_BAO_Query_VolunteerApplication extends CRM_Contact_BAO_
 
     $query->_qill[$grouping][] = ts($field['title'])." - '$qillValue'";
     $searchValue = explode('_', $field['name']);
-    $query->_where[$grouping][] = CRM_Contact_BAO_Query::buildClause("v.day", "=", $searchValue[0], "Integer");
-    $query->_where[$grouping][] = CRM_Contact_BAO_Query::buildClause("v.time", "=", $searchValue[1], "Integer");
-    $query->_where[$grouping][] = CRM_Contact_BAO_Query::buildClause("v.number_of_volunteers", "=", 1, "Integer");
+    $query->_where[$grouping][] = CRM_Contact_BAO_Query::buildClause("v.day", $op, $searchValue[0], "Integer");
+    $query->_where[$grouping][] = CRM_Contact_BAO_Query::buildClause("v.time", $op, $searchValue[1], "Integer");
+    $query->_where[$grouping][] = CRM_Contact_BAO_Query::buildClause("v.number_of_volunteers", $op, 1, "Integer");
+    $query->_where[$grouping][] = CRM_Contact_BAO_Query::buildClause("v.entity_table", $op, "civicrm_contact", "String");
   }
 
   public function getPanesMapper(&$panes) {
@@ -73,8 +78,6 @@ class CRM_Yhvrequestform_BAO_Query_VolunteerApplication extends CRM_Contact_BAO_
   }
 
   public function buildAdvancedSearchPaneForm(&$form, $type) {
-
-    // echo pre($form->_formValues);
     if ($type=='volunteer_application') {
 
       $form->add('hidden', 'hidden_volunteer_application', 1);
