@@ -19,3 +19,10 @@
     {/foreach}
     </tr>
 </table>
+{literal}
+    <script type="text/javascript">
+        CRM.$(function($) {
+            $('.crm-volunteer_application-accordion').crmAccordionToggle();
+        });
+    </script>
+{/literal}
