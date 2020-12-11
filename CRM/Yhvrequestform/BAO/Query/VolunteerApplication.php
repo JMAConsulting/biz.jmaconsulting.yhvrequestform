@@ -25,7 +25,7 @@ class CRM_Yhvrequestform_BAO_Query_VolunteerApplication extends CRM_Contact_BAO_
   public function from($name, $mode, $side) {
 
     if ($mode == CRM_Contact_BAO_Query::MODE_CONTACTS) {
-      return "$side JOIN civicrm_volunteer_timetable v ON v.entity_id = contact_a.id AND entity_table = 'civicrm_contact'";
+      return "$side JOIN civicrm_volunteer_timetable volunteer_timetable ON volunteer_timetable.entity_id = contact_a.id AND entity_table = 'civicrm_contact'";
     }
   }
 
@@ -62,15 +62,15 @@ class CRM_Yhvrequestform_BAO_Query_VolunteerApplication extends CRM_Contact_BAO_
 
     $query->_qill[$grouping][] = ts($field['title'])." - '$qillValue'";
     $searchValue = explode('_', $field['name']);
-    $query->_where[$grouping][] = CRM_Contact_BAO_Query::buildClause("v.day", $op, $searchValue[0], "Integer");
-    $query->_where[$grouping][] = CRM_Contact_BAO_Query::buildClause("v.time", $op, $searchValue[1], "Integer");
-    $query->_where[$grouping][] = CRM_Contact_BAO_Query::buildClause("v.number_of_volunteers", $op, 1, "Integer");
-    $query->_where[$grouping][] = CRM_Contact_BAO_Query::buildClause("v.entity_table", $op, "civicrm_contact", "String");
+    $query->_where[$grouping][] = CRM_Contact_BAO_Query::buildClause("volunteer_timetable.day", $op, $searchValue[0], "Integer");
+    $query->_where[$grouping][] = CRM_Contact_BAO_Query::buildClause("volunteer_timetable.time", $op, $searchValue[1], "Integer");
+    $query->_where[$grouping][] = CRM_Contact_BAO_Query::buildClause("volunteer_timetable.number_of_volunteers", $op, 1, "Integer");
+    $query->_where[$grouping][] = CRM_Contact_BAO_Query::buildClause("volunteer_timetable.entity_table", $op, "civicrm_contact", "String");
   }
 
   public function getPanesMapper(&$panes) {
 
-    $panes['Volunteer Availability'] = 'civicrm_contact';
+    $panes['Volunteer Availability'] = 'volunteer_timetable';
   }
 
   public function registerAdvancedSearchPane(&$panes) {
