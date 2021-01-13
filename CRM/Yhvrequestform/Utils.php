@@ -109,13 +109,13 @@ class CRM_Yhvrequestform_Utils {
       }
       if ($isAny) {
         $validOptions = [
-          'Administration' => 'Administration',
-          'Activation' => 'Activation',
-          'Chaplain' => 'Chaplain',
-          'Environmental Services' => 'Environmental Services',
-          'Food Service' => 'Food Service',
-          'Nursing' => 'Nursing',
-          'Service Quality' => 'Service Quality',
+          'Administration 行政部' => 'Administration 行政部',
+          'Activation 活動組' => 'Activation 活動組',
+          'Chaplain 院牧部' => 'Chaplain 院牧部',
+          'Environmental Service 環境衛生部' => 'Environmental Service 環境衛生部',
+          'Food Service 膳食' => 'Food Service 膳食',
+          'Nursing 護理部' => 'Nursing 護理部',
+          'Social Work 社工部' => 'Social Work 社工部',
         ];
       }
     }
@@ -155,13 +155,13 @@ class CRM_Yhvrequestform_Utils {
       }
       if ($isAny) {
         $validOptions = [
-          'Administration' => 'Administration',
-          'Activation' => 'Activation',
-          'Chaplain' => 'Chaplain',
-          'Environmental Services' => 'Environmental Services',
-          'Food Service' => 'Food Service',
-          'Nursing' => 'Nursing',
-          'Service Quality' => 'Service Quality',
+          'Administration 行政部' => 'Administration 行政部',
+          'Activation 活動組' => 'Activation 活動組',
+          'Chaplain 院牧部' => 'Chaplain 院牧部',
+          'Environmental Service 環境衛生部' => 'Environmental Service 環境衛生部',
+          'Food Service 膳食' => 'Food Service 膳食',
+          'Nursing 護理部' => 'Nursing 護理部',
+          'Social Work 社工部' => 'Social Work 社工部',
         ];
       }
     }
